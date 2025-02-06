@@ -1,0 +1,7 @@
+Single Comment => Ctrl+/
+Multiple Comment => Shift+Ctrl+/
+Beautify => Ctrl+Alt+l
+Copy and Paste => Ctrl+D
+Rename Everything => Shift+F6
+psvm => Tab - Public Static Void Main (shortcut for creating the main method in Java)
+sout => Tab (shortcut for printing output in Java)
