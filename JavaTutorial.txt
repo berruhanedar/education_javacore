@@ -53,17 +53,14 @@ Maven is a tool for managing and automating Java-based projects, handling build 
 reporting efficiently.
 
 
-
 9. WHAT IS POM.XML?
 pom.xml is the configuration file in Maven projects, defining dependencies, plugins, and project settings for
 proper build and management.
 
 
-
 10. WHAT ARE DATA TYPES?
 Data types define the kind of values variables can hold and determine memory usage and operations that can be
 performed on them.
-
 
 
 11. WHAT ARE PRIMITIVE TYPES?
@@ -84,6 +81,26 @@ Object-Oriented Support: Enables primitive types to be used as objects.
 Null Values: Unlike primitive types, wrapper classes can hold null.
 Autoboxing & Unboxing: Java automatically converts between primitive types and their wrapper counterparts.
 Wrapper types make primitive data compatible with collections and other object-oriented features in Java.
+
+
+13. What is Camel Case?
+Camel Case is a naming style where words are joined without spaces, with each word starting with a capital letter
+(e.g., myVariable). It is commonly used in programming for variables, methods, and class names.
+
+
+14. What is Pascal Case?
+Pascal Case is a naming convention where words are joined without spaces, and each word starts with a capital letter,
+including the first word (e.g., MyVariable). It is often used for class names in many programming languages.
+
+
+15. What is Kebab Case?
+Kebab Case is a naming convention where words are joined by hyphens, and all letters are lowercase (e.g., my-variable).
+It is commonly used for file names and URLs.
+
+
+
+
+
 
 
 
