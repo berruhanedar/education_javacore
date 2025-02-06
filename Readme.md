@@ -8,7 +8,11 @@
 [Git](https://git-scm.com/downloads)
 
 
-
+# Git
 ```sh
+git init
+git add .
+git git commit -m "add message"
+git push -u origin master
 ```
 ---
