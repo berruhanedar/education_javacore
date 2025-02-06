@@ -17,7 +17,7 @@ git add .
 git git commit -m "add message"
 git push -u origin master
 
-git clone (https://github.com/berruhanedar/education_javacore)
+git clone https://github.com/berruhanedar/education_javacore
 ```
 ---
 
