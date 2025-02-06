@@ -38,10 +38,9 @@ In Java, every statement must end with a semicolon(;).
 ---
 
 
-## Java Core
+## Java Core Information
 ```sh
-
-
+Java is case-sensitive, meaning it distinguishes between uppercase and lowercase letters.
 ```
 ---
 
