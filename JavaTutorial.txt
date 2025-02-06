@@ -1,0 +1,107 @@
+1. WHAT IS JAVA?
+Java is an object-oriented programming language developed by Sun Microsystems in 1995 and currently owned by Oracle.
+Java is known for its portability, security, multi-platform support, and extensive library support.
+
+
+2. JAVA FEATURES
+    1.Object-Oriented – Java follows OOP principles: Encapsulation, Inheritance, Polymorphism, and Abstraction.
+    2.Platform Independence – "Write Once, Run Anywhere" using JVM and bytecode.
+    3.Security – Runs in a secure "sandbox" environment, preventing harmful actions.
+    4.Multithreading – Supports parallel execution for better performance.
+    5.Automatic Memory Management – Uses Garbage Collection to free unused memory.
+    6.Rich API – Provides built-in libraries for networking, GUI, databases, etc.
+    7.Dynamic Behavior – Classes can be loaded and extended at runtime.
+    8.Exception Handling – Strong error management system with try-catch blocks.
+    9.High Performance – JVM optimizations and Just-In-Time (JIT) compiler.
+    10.Multiple Programming Paradigms – Supports both OOP and functional programming.
+    11.Distributed Computing – Facilitates network-based applications with RMI and APIs.
+    These features make Java secure, portable, efficient, and widely used in software development.
+
+
+3. WHAT IS JVM?
+JVM (Java Virtual Machine) runs Java programs by executing bytecode, an intermediate format created after compilation.
+It ensures platform independence, allowing Java applications to run on any operating system with a compatible JVM.
+
+
+4. WHAT IS JRE?
+JRE (Java Runtime Environment) is a software package containing everything needed to run Java applications,
+including the JVM, libraries (APIs), and some utilities. However, it does not include development tools like a
+compiler, which are part of the JDK.
+
+
+5. WHAT IS JDK?
+JDK (Java Development Kit) includes all the tools required to develop Java applications, such as a compiler,
+debugger, and other utilities. It also contains the JRE, meaning it provides both runtime and development components.
+
+Summary:
+JVM: Executes Java bytecode.
+JRE: Provides an environment for running Java programs (JVM + libraries).
+JDK: Includes all tools needed for Java development (JRE + compiler, debugger, etc.).
+
+
+6. WHAT IS A COMPILER?
+A compiler converts high-level source code into machine code or bytecode in one go. It translates the entire code
+before execution.
+
+
+7. WHAT IS AN INTERPRETER?
+An interpreter reads and executes code line by line, translating it on the fly instead of compiling it all at once.
+
+
+8. WHAT IS MAVEN?
+Maven is a tool for managing and automating Java-based projects, handling build processes, dependencies, and
+reporting efficiently.
+
+
+
+9. WHAT IS POM.XML?
+pom.xml is the configuration file in Maven projects, defining dependencies, plugins, and project settings for
+proper build and management.
+
+
+
+10. WHAT ARE DATA TYPES?
+Data types define the kind of values variables can hold and determine memory usage and operations that can be
+performed on them.
+
+
+
+11. WHAT ARE PRIMITIVE TYPES?
+Primitive types are the basic data types provided by a programming language. In Java, there are 8 primitive types:
+
+byte, short, int, long (integer types)
+float, double (floating-point types)
+char (character type)
+boolean (true/false values)
+
+
+12. WHAT ARE WRAPPER TYPES?
+Wrapper types are object-oriented versions of Java's primitive types. They wrap primitive values inside a class,
+allowing them to be used as objects.
+
+Features of Wrapper Classes:
+Object-Oriented Support: Enables primitive types to be used as objects.
+Null Values: Unlike primitive types, wrapper classes can hold null.
+Autoboxing & Unboxing: Java automatically converts between primitive types and their wrapper counterparts.
+Wrapper types make primitive data compatible with collections and other object-oriented features in Java.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
