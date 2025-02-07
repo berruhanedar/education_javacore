@@ -1,7 +1,8 @@
 package com.berruhanedar._1_part_javatypes;
 
-public class _02_JavaPrimitiveTypes {
+public class _03_JavaPrimitiveTypes {
     public static void main(String[] args) {
+        //"When writing data variable names;"
 
         //Primitive types in Java are 8 in total, and they cannot hold a null value.
         //Integer types (4)
