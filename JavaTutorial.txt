@@ -98,21 +98,47 @@ Kebab Case is a naming convention where words are joined by hyphens, and all let
 It is commonly used for file names and URLs.
 
 
-16. What is Stack Memory:
+16. What is Stack Memory?
 Stack memory is a region of memory used for the execution of programs. It stores local variables, function calls,
 and their execution context. Memory allocation is managed in a Last In, First Out (LIFO) order. When a function is
 called, memory is allocated on the stack, and when the function finishes, the memory is freed. Stack memory is fast
 and efficient but has limited size.
 
 
-17. What is Heap Memory:
+17. What is Heap Memory?
 Heap memory is used for dynamic memory allocation. It is a larger pool of memory where objects are created and stored. Unlike the stack, heap memory is not managed in a LIFO order, and memory can be allocated or deallocated at any time. Memory in the heap is generally slower to access and needs manual management (like using new and delete in languages like C++ or garbage collection in Java).
 
 Stack memory: fast, limited size, used for local variables and function calls.
 Heap memory: slower, larger size, used for dynamically allocated memory (objects).
 
 
+18. What is Escape Character?
+An escape character in English is a character used in a string to give special meaning to the character that
+follows it. It is often used to represent characters that are difficult to type or have a special function,
+such as newlines, tabs, or quotes.
 
+In most programming languages (including Java), the escape character is the backslash (\). It tells the compiler or
+interpreter that the character following it should be treated in a special way.
+
+\n – Newline (line break).
+\t – Tab.
+\\ – A literal backslash.
+\' – Single quote (useful in character literals).
+\" – Double quote (useful in string literals).
+
+
+19. What is Scanner Class
+The Scanner class in Java is part of the java.util package and is used to read input from various sources,
+including user input from the console, files, and streams. It is commonly used to parse primitive types
+(like int, double, float, etc.) and strings.
+
+Common Methods in Scanner Class:
+    nextLine(): Reads a whole line of text as a string.
+    nextInt(): Reads the next token as an integer.
+    nextDouble(): Reads the next token as a double.
+    next(): Reads the next token as a string.
+    hasNext(): Returns true if there is another token in the input.
+    close(): Closes the scanner to free up resources.
 
 
 
