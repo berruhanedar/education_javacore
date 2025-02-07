@@ -98,8 +98,18 @@ Kebab Case is a naming convention where words are joined by hyphens, and all let
 It is commonly used for file names and URLs.
 
 
+16. What is Stack Memory:
+Stack memory is a region of memory used for the execution of programs. It stores local variables, function calls,
+and their execution context. Memory allocation is managed in a Last In, First Out (LIFO) order. When a function is
+called, memory is allocated on the stack, and when the function finishes, the memory is freed. Stack memory is fast
+and efficient but has limited size.
 
 
+17. What is Heap Memory:
+Heap memory is used for dynamic memory allocation. It is a larger pool of memory where objects are created and stored. Unlike the stack, heap memory is not managed in a LIFO order, and memory can be allocated or deallocated at any time. Memory in the heap is generally slower to access and needs manual management (like using new and delete in languages like C++ or garbage collection in Java).
+
+Stack memory: fast, limited size, used for local variables and function calls.
+Heap memory: slower, larger size, used for dynamically allocated memory (objects).
 
 
 
