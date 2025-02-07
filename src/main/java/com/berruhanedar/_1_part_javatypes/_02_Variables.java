@@ -36,5 +36,6 @@ public class _02_Variables {
 
         // CONSTANTS
         final int MAX_STUDENTS = 100;
+        System.out.println(MAX_STUDENTS);
     }
 }
