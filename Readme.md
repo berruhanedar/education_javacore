@@ -45,11 +45,18 @@ Java is case-sensitive, meaning it distinguishes between uppercase and lowercase
 ---
 
 
-## Java Core
-```sh
+## 1. What is Maven?
 
+Maven is a **build automation** tool used for building, managing, and automating Java projects. Developed by Apache, it simplifies dependency management, compilation, testing, and deployment processes, particularly in Java-based projects. Maven uses an XML-based configuration file called `pom.xml` to define project settings and dependencies.
 
-```
+### **Key Features of Maven:**
+- **Dependency Management:** Automatically downloads required libraries for the project.
+- **Project Structure Standardization:** Organizes projects in a standard format.
+- **Automated Compilation:** Compiles the project (`mvn compile`).
+- **Test Execution:** Runs tests using tools like JUnit and TestNG (`mvn test`).
+- **Packaging:** Packages the project as a `jar` or `war` file (`mvn package`).
+- **Deployment Management:** Deploys applications to remote servers or repositories (`mvn deploy`).
+
 ---
 
 

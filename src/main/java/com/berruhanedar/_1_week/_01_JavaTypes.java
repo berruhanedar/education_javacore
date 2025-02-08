@@ -1,4 +1,4 @@
-package com.berruhanedar._1_part_javatypes;
+package com.berruhanedar._1_week;
 
 // Single Comment
 /*

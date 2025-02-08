@@ -1,4 +1,4 @@
-package com.berruhanedar._1_part_javatypes;
+package com.berruhanedar._1_week;
 
 public class _06_Math {
     public static void main(String[] args) {
