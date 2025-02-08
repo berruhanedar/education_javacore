@@ -60,19 +60,43 @@ Maven is a **build automation** tool used for building, managing, and automating
 ---
 
 
-## Java Core
-```sh
+### **2. What is `pom.xml`?**
+`pom.xml` (**Project Object Model**) file is the central configuration file for Maven projects. It defines project dependencies, versioning, plugins, and configurations.
 
+Example `pom.xml` File:
+```xml
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
+    <groupId>com.example</groupId>
+    <artifactId>my-app</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <version>2.7.4</version>
+        </dependency>
+    </dependencies>
+</project>
 ```
+What This File Contains:
+- Project Identity  (`groupId`, `artifactId`, `version`)
+- Dependencies (`dependencies`)
+- Build Configurations
 ---
 
+### **3. What is JDK (Java Development Kit)?**
+**JDK (Java Development Kit)**, is a development environment used for building Java applications. It includes:
+- **JRE (Java Runtime Environment)** : Runtime environment for executing Java applications
+- **JVM (Java Virtual Machine)** : The virtual machine that runs Java bytecode
+- **Java Compiler (javac)** : Compiles Java source code into bytecode
+- **Java Debugger (jdb)** : Debugging tool for Java applications
+- **Java API ve kütüphaneleri** :Essential libraries for Java development
 
-## Java Core
-```sh
-
-
-```
+JDK olmadan Java kodu yazılamaz ve çalıştırılamaz.
 ---
 
 
