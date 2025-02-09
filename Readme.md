@@ -474,13 +474,11 @@ int z = y.intValue(); // Wrapper -> Primitive (Unboxing)
 
 
 ## Primitive type - Wrapper Type
-```sh 
 
-```
 ---
 Primitive types are **faster and use less memory**, while wrapper classes provide **additional functionality** like null values and methods.
 
-🚀 Use primitive types when performance matters and wrapper types when object functionality is needed!
+Use primitive types when performance matters and wrapper types when object functionality is needed!
 ---
 
 
