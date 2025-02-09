@@ -270,14 +270,14 @@ String $generatedCode;  // Usable but not recommended
 
 ---
 
-### **10. What is Data Types ?**
+### **What is Data Types ?**
 In Java, data types refer to the types of values that variables can hold. They are divided into two main categories:
 1. **Primitive Types**
 2. **Reference Types**
 ---
 
 
-### **11. What is Primitive Types ?**
+### **What is Primitive Types ?**
 In Java, primitive types are simple data types that store values directly in memory.
 
 | Data Type | Size | Default Value  | Range              |
