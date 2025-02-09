@@ -731,6 +731,814 @@ This detailed explanation will help you clearly understand the differences betwe
 
 **Primitive types form the core of Java and provide significant performance advantages! 🚀**
 
+## Wrapper new Usage
+
+---
+If we want to create **wrapper classes** using the `new` keyword, we can write it as follows by using the **wrapper class** of each primitive type:
+
+```java
+public class WrapperExample {
+    public static void main(String[] args) {
+        Byte wrapperTypeByte = new Byte((byte) 127);
+        wrapperTypeByte = null; // Wrapper classes can be null
+        System.out.println(wrapperTypeByte);
+
+        Short wrapperTypeShort = new Short((short) 32767);
+        Integer wrapperTypeInt = new Integer(2147483647);
+        Long wrapperTypeLong = new Long(9223372036854775807L);
+
+        Float wrapperTypeFloat = new Float(14.23f);
+        Double wrapperTypeDouble = new Double(14.23);
+
+        Boolean wrapperTypeBoolean = new Boolean(true);
+        Character wrapperTypeChar = new Character('a');
+
+        System.out.println("Short: " + wrapperTypeShort);
+        System.out.println("Integer: " + wrapperTypeInt);
+        System.out.println("Long: " + wrapperTypeLong);
+        System.out.println("Float: " + wrapperTypeFloat);
+        System.out.println("Double: " + wrapperTypeDouble);
+        System.out.println("Boolean: " + wrapperTypeBoolean);
+        System.out.println("Character: " + wrapperTypeChar);
+    }
+}
+```
+### **Important Notes**
+1. **Usage of `new` Is Not Recommended in Java 9 and Later**
+    - Starting from Java 9, using `new Byte()`, `new Integer()`, etc., has been **deprecated**.
+    - Instead, **direct assignment** should be used:
+      ```java
+      Byte wrapperTypeByte = 127;  // Recommended usage
+      ```
+    - **Why:** Due to the **autoboxing** mechanism in Java, these types can automatically be converted to wrapper classes without using `new`.
+
+2. **Performance and Memory Management**
+    - Using `new` **creates unnecessary objects, filling up heap memory**.
+    - For example:
+      ```java
+      Integer a = 100;  // Autoboxing (Recommended usage)
+      Integer b = new Integer(100); // Creates a new object in heap memory
+      ```
+    - **If you use `new Integer(100)`, a new object will be created in the heap, leading to unnecessary memory consumption.**
+
+### **Conclusion**
+- **If you're not working with older versions** and have no specific reason, you should prefer the **autoboxing** method without using `new`.
+- **If you're working with Java 9+**, avoid using `new` and instead use direct assignments. 🚀
+
+---
+
+## Stack Memory (Primitive) vs Heap Memory (Wrapper)
+
+---
+### **Differences Between Primitive Stack Memory and Wrapper Heap Memory in Java**
+
+In Java, **primitive data types** (**int, double, boolean, char, float, long, short, byte**) and **wrapper classes** (**Integer, Double, Boolean, Character, Float, Long, Short, Byte**) are stored in different areas of memory. The biggest difference between these two types is related to **stack and heap memory management**. Let's examine these differences **in great detail**.
+
+---
+
+## **1. Definition of Stack and Heap Memory**
+
+In Java memory management, there are **two main areas**:
+- **Stack Memory:** Small, fast, and easy to manage. **Primitive data types are stored here.**
+- **Heap Memory:** Larger, slower, but more flexible. **Wrapper classes (data stored as objects) are stored here.**
+
+---
+
+## **2. Comparison of Stack and Heap Memory**
+
+| **Feature**          | **Stack Memory**        | **Heap Memory**        |
+|----------------------|-------------------------|------------------------|
+| **Stored Data Types** | Primitive variables (`int, double, char`) | Objects and Wrapper classes (`Integer, Double, Character`) |
+| **Memory Management** | LIFO (Last In First Out) | Managed by Garbage Collector |
+| **Speed**             | Very fast               | Relatively slower       |
+| **Access Time**       | Access to stack variables is **faster** | Access to heap variables is **slower** |
+| **Lifetime**          | Exists during the execution of a method | Can exist as long as the program runs |
+| **Memory Size**       | Smaller                 | Larger                 |
+| **Multithread Usage** | Specific to each thread (each thread has its own stack) | Heap memory is **shared by all threads** |
+| **Automatic Cleanup** | Automatically cleaned up, no need for Garbage Collector | Managed by Garbage Collector, cleaned when needed |
+
+---
+
+## **3. Memory Usage Difference Between Primitive and Wrapper**
+
+### **A) Primitive Data Types (Stack)**
+
+Primitive data types are **stored directly as values** in memory. For example:
+
+```java
+int x = 10;
+```
+
+- The variable `x` is stored in **stack memory**.
+- The stack manages variables quickly and **automatically cleans up** when the function ends.
+
+Memory organization in the stack looks like this:
+
+```
+Stack Memory:
++----------------------+
+| int x = 10          |
++----------------------+
+```
+
+---
+### **B) Wrapper Classes (Heap)**
+
+If we use a **wrapper class** (object) instead of a primitive type:
+
+```java
+Integer y = new Integer(10);
+```
+
+In this case, the memory structure looks like this:
+- The variable `y` is stored as a **reference** in the **stack**.
+- The object created by `new Integer(10)` is stored in **heap memory**.
+- A reference (address) is held in the stack to access the object stored in the heap.
+
+```
+Stack Memory:
++----------------------+
+| Integer y (ref: 0xA) |
++----------------------+
+
+Heap Memory:
++----------------------+
+| [Integer: 10] (0xA) |
++----------------------+
+```
+That is, while a **primitive variable contains the value directly**, wrapper classes **store references and the actual data is kept in the heap**.
+
+## **4. Detailed Example: Comparing Stack and Heap**
+
+Now, let's look at the following code to understand the difference between stack and heap:
+
+```java
+public class MemoryTest {
+    public static void main(String[] args) {
+        int a = 5;
+        Integer b = new Integer(5);
+        
+        modify(a, b);
+        
+        System.out.println("a: " + a);  // 5
+        System.out.println("b: " + b);  // 5
+    }
+    
+    public static void modify(int x, Integer y) {
+        x = 10;       // Stack içindeki x değişir
+        y = new Integer(10); // Yeni bir nesne oluşturulur (Heap)
+    }
+}
+```
+
+### **Code Execution Logic**
+1. `int a = 5;` → **The value 5 is stored directly in the stack.**
+2. `Integer b = new Integer(5);` → **A new Integer object is created in the heap. The reference is stored in the stack.**
+3. When calling the `modify(a, b);` method:
+    - `x` → a new stack variable that **copies the value 5** (pass by value).
+    - `y` → a reference that **receives a new Integer object**.
+4. `x = 10;` → **A new variable is created in the stack and the value is changed.**
+5. `y = new Integer(10);` → **A new Integer object is created in the heap, but it only affects the `modify` method and does not affect the `b` variable in the main method.**
+6. When the `main` method finishes, `a` remains `5` and `b` remains `5`.
+
+This happens because **primitives cannot be modified (pass-by-value) and wrapper objects lose their references when a new object is created**.
+
+---
+
+## **5. Wrapper Classes and Automatic Boxing / Unboxing**
+Java provides automatic conversion between primitive types and wrapper classes. This is known as **Autoboxing and Unboxing**.
+
+### **Autoboxing (Primitive → Wrapper)**
+```java
+int primitiveValue = 100;
+Integer wrapperValue = primitiveValue; // Autoboxing
+```
+
+- Here, **`primitiveValue`** is automatically converted to an `Integer` object and stored in the heap.
+
+### **Unboxing (Wrapper → Primitive)**
+```java
+Integer wrapperValue = 200;
+int primitiveValue = wrapperValue; // Unboxing
+```
+
+- `wrapperValue` is retrieved from the heap and assigned to the `primitiveValue` variable stored on the stack.
+
+These conversions can lead to **performance losses** because primitive types are faster due to no heap access.
+
+---
+
+## **6. When to Use Primitive vs Wrapper Types?**
+| Use Case | Use Primitive (Stack) | Use Wrapper (Heap) |
+|----------|-----------------------|---------------------|
+| **Memory Efficiency** | ✅ | ❌ (Heap uses more memory) |
+| **Performance (Faster Access)** | ✅ | ❌ (Heap access is slower) |
+| **Object-Oriented Programming (OOP)** | ❌ | ✅ (Can be used with object properties) |
+| **Nullable Values (Null Assignment)** | ❌ | ✅ (Primitive can't be null, wrapper can) |
+| **Collection (List, Set, Map)** | ❌ | ✅ (Primitive types can't be used in collections) |
+
+If **memory and speed are important**, we should use **primitive types**.  
+If **object-oriented programming, null value storage, or working with collections (List, Set, Map) is required**, we should use **wrapper classes**.
+
+---
+
+
+## **Conclusion**
+- **Primitive variables are stored in stack memory, hold their values directly, and are faster.**
+- **Wrapper classes are stored in heap memory, accessed via references, and use more memory.**
+- **Automatic Boxing/Unboxing allows for conversions, but performance considerations should be kept in mind.**
+
+Based on this information, it is important to choose the most appropriate memory usage strategy according to the project's requirements. 🚀
+
+---
+
+## Wrapper `new` Usage
+```sh 
+Short wrapperTypeShort = new Short((short) 32767); 
+bununla Short wrapperTypeShort 2=32767 arasındaki far nedir ?
+```
+---
+
+In Java, let's examine the difference between the following two lines:
+
+```java
+Short wrapperTypeShort1 = new Short((short) 32767); //Explicit Object Creation - new
+Short wrapperTypeShort2 = 32767; // Autoboxing
+```
+
+The fundamental differences between these two approaches are:
+
+---
+
+## **1. `new Short((short) 32767)` Usage (Creates a New Object in Heap Memory)**
+
+```java
+Short wrapperTypeShort1 = new Short((short) 32767);
+```
+
+- Since the `new` keyword is not used, **no new object is created** each time.
+- **Autoboxing** occurs, and Java internally uses cached wrapper objects for values within certain ranges (like `-128` to `127` for `Short`).
+- **Heap memory usage is minimized**, and **performance improves** due to reused cached objects.
+- **Comparing using `==`** will return `true` when both references point to the same cached object.
+- This approach is preferred and recommended for performance and memory efficiency.
+
+---
+
+## **2. `Short wrapperTypeShort2 = 32767;` Usage (Autoboxing - Cached Object Usage)**
+```java
+Short wrapperTypeShort2 = 32767;
+```
+
+- **Autoboxing** automatically converts the primitive `short` value to a `Short` object.
+- **Java uses a caching mechanism** for `Integer` and `Short` types.
+- For small number ranges (between `-128` and `127`), **objects are fetched from the cache**.
+- **It is more performant** because it doesn't create a new object each time.
+
+---
+
+## **Proof of Differences: Comparison Test**
+We can observe the difference by running the following code:
+
+```java
+public class ShortComparison {
+    public static void main(String[] args) {
+        Short wrapperTypeShort1 = new Short((short) 127);
+        Short wrapperTypeShort2 = 127; // Autoboxing
+        
+        Short wrapperTypeShort3 = new Short((short) 127);
+        Short wrapperTypeShort4 = 127; // Autoboxing
+        
+        System.out.println(wrapperTypeShort1 == wrapperTypeShort3); // false (Heap'te farklı nesneler)
+        System.out.println(wrapperTypeShort2 == wrapperTypeShort4); // true (Cache mekanizması sayesinde aynı nesne)
+        
+        Short wrapperTypeShort5 = 32767;
+        Short wrapperTypeShort6 = 32767;
+
+        System.out.println(wrapperTypeShort5 == wrapperTypeShort6); // false (Çünkü cache dışında)
+    }
+}
+```
+
+---
+
+## **Results**
+1. **If you use `new`**, a **new object** is created in heap memory, and the `==` operator returns `false` because they are different objects.
+2. **If you write `Short wrapperTypeShort2 = 32767;`**, Java **uses autoboxing**.
+3. **Java caches values between `-128` and `127**, so for these values, `==` comparison might return `true`. However, for larger values like `32767`, new objects are created because they are outside the cache range.
+
+---
+
+## **Which Approach Should We Prefer?**
+✔ **For performance reasons, `Short wrapperTypeShort = 32767;` (Autoboxing) should be preferred.**  
+❌ **Using `new Short((short) 32767)` causes unnecessary memory consumption and is not recommended.**
+
+Therefore, **avoiding object creation with `new` and preferring autoboxing is the best practice.**
+
+---
+
+## Java Life-Cycles
+
+---
+### **Compiler or Interpreter First in Java?**
+The execution process of Java programs involves **both a compiler and an interpreter**, but **the compiler runs first, followed by the interpreter**.
+
+1. **Compiler Runs First:**
+    - Java source code (`.java` files) is converted into **Bytecode** (`.class` files) by the **Javac (Java Compiler)**.
+    - Bytecode is **platform-independent**, meaning it can run on any environment.
+
+2. **Interpreter Runs Next:**
+    - The **Java Virtual Machine (JVM)** takes the Bytecode and uses the **Just-In-Time (JIT) Compiler** to convert it into executable machine code.
+    - The JVM **interprets and executes the Bytecode line by line**.
+
+### **Java Program Life-Cycle**
+Let's break down the life cycle of a Java program step by step:
+
+---
+
+## **1. Software Phase (Source Code - `.java` File)**
+The developer writes the **Java source code** (`.java` files).  
+For example:
+```java
+public class HelloWorld {
+    public static void main(String[] args) {
+        System.out.println("Hello, World!");
+    }
+}
+```
+
+---
+## **2. Compilation Phase (Derleme Aşaması)**
+The Java **compiler** (`javac`) converts the source code into **Bytecode**.
+
+### **What happens during this phase:**
+- **Syntax check:** The compiler (`javac`) checks the syntax errors in the code.
+- **Optimization:** The code is optimized for better performance.
+- **Bytecode generation:** A **machine-independent** `.class` file is created.
+
+
+### **Compilation (Derleme) Command:**
+```sh
+javac HelloWorld.java
+```
+
+ **After the Compilation Command, the Following File is Created:**
+```
+HelloWorld.class
+```
+**This `.class` File Contains Java Bytecode:**
+
+## **3. ClassLoader Stage**
+Java **ClassLoader** loads `.class` files into the JVM.
+
+- **Bootstrap ClassLoader:** Loads Java's core classes (`java.lang.*`).
+- **Extensions ClassLoader:** Loads additional libraries (those in the `lib/ext` directory).
+- **Application ClassLoader:** Loads the user-written classes.
+
+---
+
+## **4. Bytecode Verification**
+- **JVM checks the security of Bytecode.**
+- **Prevents the execution of faulty or malicious code.**
+- **Blocks memory overflow or illegal memory access.**
+
+---
+
+## **5. Interpreter Stage**
+- **Java Interpreter** reads and executes Bytecode **line by line**.
+- However, **constant interpretation can be slow**, which is why the **JIT (Just-In-Time) Compiler** comes into play.
+
+---
+
+## **6. Just-In-Time (JIT) Compiler Stage**
+- The JIT Compiler takes **repeated code and converts it directly into machine code**.
+- **Improves JVM performance**, as it prevents the need to repeatedly interpret the same code.
+
+---
+
+## **7. Runtime**
+- **Garbage Collector (GC):** Cleans up unused objects from memory.
+- **Thread Management:** Manages scheduling between multiple processes.
+- **Exception Handling:** Catches errors that occur during runtime.
+
+---
+
+## **8. Program Exit**
+If everything goes correctly, the program’s output is printed to the screen:
+```sh
+Hello, World!
+```
+
+---
+
+### **General Summary: Java Execution Cycle**
+1. **Source Code (`.java`) is written.**
+2. **Java Compiler (`javac`) converts the code into Bytecode (`.class`).**
+3. **ClassLoader** loads the `.class` file into the JVM.
+4. **Bytecode Verification** performs a security check.
+5. **Interpreter** interprets and runs Bytecode **line by line**.
+6. **JIT Compiler** converts frequently used code into **machine code** (improves performance).
+7. **Garbage Collector** cleans up unused memory.
+8. **Program output is printed to the screen.**
+
+---
+
+### **Compiler vs. Interpreter: Which Comes First?**
+✅ **The Compiler (`javac`) runs first → Then the Interpreter (`JVM`) runs.**  
+🚀 **Result:** Java is both a **compiled** and **interpreted** language.
+
+
+### **What are Java Core Escape Sequences?**
+In Java, **escape sequences** are special characters that start with a backslash (`\`) and allow us to use special characters inside a String. They represent characters that cannot be written directly.
+
+💡 **For example:**
+- `"` double quote cannot be written directly in a String. (`"This is a "sample" text"`) → Incorrect
+- Solution: Use the escape sequence `\"`. (`"This is a \"sample\" text"`) → Correct
+
+---
+
+## **Escape Sequences in Java**
+| **Escape Sequence** | **Meaning** | **Example Usage** |
+|---------------------|-------------|-------------------|
+| `\n` | New line | `"Line 1\nLine 2"` |
+| `\t` | Tab | `"Name:\tJohn"` |
+| `\'` | Single quote | `char c = '\'';` |
+| `\"` | Double quote | `"This is a \"sample\" text"` |
+| `\\` | Backslash | `"C:\\Users\\Documents"` |
+| `\r` | Carriage return | `"Hello\rWorld"` |
+| `\b` | Backspace | `"ABC\bD"` (Result: "ABD") |
+| `\f` | Form feed (page break) | `"Page break\fNew Page"` |
+| `\uXXXX` | Unicode character | `"\u00E7"` (ç character) |
+
+---
+
+## **Kaçış Dizileriyle Örnekler**
+### **1. `\n` → New Line r**
+```java
+public class EscapeExample {
+    public static void main(String[] args) {
+        System.out.println("Merhaba Dünya!\nBu bir alt satıra geçti.");
+    }
+}
+```
+**Output:**
+```
+Merhaba Dünya!
+Bu bir alt satıra geçti.
+```
+---
+
+### **2. `\t` → Tab**
+```java
+public class EscapeExample {
+    public static void main(String[] args) {
+        System.out.println("Name:\tAhmet");
+        System.out.println("Surname:\tYılmaz");
+    }
+}
+```
+**Output:**
+```
+İsim:     Ahmet
+Soyisim:  Yılmaz
+```
+
+---
+
+### **3. `\'` ve `\"` → ' and " **
+```java
+public class EscapeExample {
+    public static void main(String[] args) {
+        System.out.println("Bu bir \"Java\" programıdır.");
+        System.out.println("Tek tırnak: \'A\' karakteri");
+    }
+}
+```
+**Output:**
+```
+Bu bir "Java" programıdır.
+Tek tırnak: 'A' karakteri
+```
+
+---
+
+### **4. `\\` → \ **
+```java
+public class EscapeExample {
+    public static void main(String[] args) {
+        System.out.println("Dosya yolu: C:\\Users\\Documents\\file.txt");
+    }
+}
+```
+**Output**
+```
+Dosya yolu: C:\Users\Documents\file.txt
+```
+
+---
+### **5. `\r` → Carriage Return**
+```java
+public class EscapeExample {
+    public static void main(String[] args) {
+        System.out.println("Merhaba\rDünya!");
+    }
+}
+```
+**Output**
+```
+Dünya!
+```
+📌 `\r`, moves the cursor to the beginning of the line, and "World!" overwrites "Hello".
+
+---
+
+### **6. `\b` → Backspace**
+```java
+public class EscapeExample {
+    public static void main(String[] args) {
+        System.out.println("ABC\bD");
+    }
+}
+```
+**Output:**
+```
+ABD
+```
+📌 `\b`  escape sequence represents backspace, which deletes the last character.
+
+---
+
+### **7. `\f` → Form Feed (Sayfa Sonu)**
+```java
+public class EscapeExample {
+    public static void main(String[] args) {
+        System.out.println("Sayfa sonu\fYeni Sayfa");
+    }
+}
+```
+
+📌  In most modern systems**, the \f (form feed) character is invisible, but it was traditionally used as a page break or form feed command in printers and old terminals.
+
+---
+
+### **8. `\uXXXX` → Unicode **
+```java
+public class EscapeExample {
+    public static void main(String[] args) {
+        System.out.println("Türkçe karakter: \u00E7, \u011F, \u015F");
+    }
+}
+```
+**Output:**
+```
+Türkçe karakter: ç, ğ, ş
+```
+📌 **Unicode** allows special characters to be used in all languages.
+
+---
+
+## **Conclusion**
+- In Java, **escape sequences** allow us to use special characters within a String.
+- The most commonly used ones: `\n` (new line), `\t` (tab), `\"` (double quote), `\\` (backslash).
+- **Advanced usage:** With Unicode (`\uXXXX`), we can write special characters inside a String.
+
+📌 **In summary:** If you want to write special characters inside a text, you need to use **escape sequences**! 🚀
+
+----
+# **Java Scanner Class (java.util.Scanner) – Detailed Explanation**
+
+## **1. What is Scanner?**
+**Scanner** is a class in Java used for **reading input from the user**, **reading data from files**, and **parsing strings**. It is found in the **java.util.Scanner** package.
+
+In Java, it is used for operations like **taking input from System.in (keyboard input), reading from files (File), reading from strings**, and more.
+
+---
+## **2. Uses of the Scanner Class**
+| **Use Case**                 | **Description**                                                                |
+|------------------------------|--------------------------------------------------------------------------------|
+| **Getting input from the user** | With `Scanner`, we can take input from the keyboard.                          |
+| **Reading from files**        | We can read data from files line by line or word by word.                     |
+| **String parsing**            | We can split string expressions based on a specific delimiter.                |
+| **Converting data types**     | We can convert string values into types like `int`, `double`, `boolean`, etc. |
+
+
+---
+## **3. Importing the Scanner Class**
+Since the Scanner class is located in the **java.util** package, it needs to be **imported** before use:
+```java
+import java.util.Scanner;
+```
+
+💡 **If we don’t write `import java.util.Scanner;`, Java won’t recognize this class and will throw an error!**
+
+---
+
+## **4. Taking Input from the User with Scanner**
+Using the Scanner class, we can take **different types of input**:
+
+### **4.1. Reading String Data (`next()` and `nextLine()`)**
+```java
+import java.util.Scanner;
+
+public class ScannerExample {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Adınızı girin: ");
+        String ad = scanner.next();  // Tek kelime okur
+
+        System.out.print("Soyadınızı girin: ");
+        String soyad = scanner.next();  // Tek kelime okur
+
+        System.out.print("Cümlenizi girin: ");
+        scanner.nextLine(); // Önceki enter'ı temizler
+        String cumle = scanner.nextLine(); // Bütün satırı okur
+
+        System.out.println("Adınız: " + ad);
+        System.out.println("Soyadınız: " + soyad);
+        System.out.println("Girdiğiniz cümle: " + cumle);
+
+        scanner.close();
+    }
+}
+```
+---
+### **Differences:**
+| **Method** | **Description** |
+|------------|-----------------|
+| `next()`   | Reads **a single word**. It stops reading when it encounters a space. |
+| `nextLine()` | Reads the **entire line**. It waits until the Enter key is pressed. |
+
+💡 **Note:** If methods like `next()` or `nextInt()` are used before `nextLine()`, a `scanner.nextLine();` line should be added to clear the Enter key character.
+
+---
+
+### **4.2. Reading Numeric Data (`nextInt()`, `nextDouble()`, `nextFloat()`, `nextLong()`)**
+```java
+import java.util.Scanner;
+
+public class ScannerExample {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Yaşınızı girin: ");
+        int yas = scanner.nextInt();
+
+        System.out.print("Boyunuzu girin: ");
+        double boy = scanner.nextDouble();
+
+        System.out.print("Ağırlığınızı girin: ");
+        float agirlik = scanner.nextFloat();
+
+        System.out.println("Yaşınız: " + yas);
+        System.out.println("Boyunuz: " + boy);
+        System.out.println("Kilonuz: " + agirlik);
+
+        scanner.close();
+    }
+}
+```
+### **Methods and Data Types**
+| **Method**         | **Accepted Data Type**     |
+|--------------------|----------------------------|
+| `nextInt()`        | `int` (Integer)            |
+| `nextDouble()`     | `double` (Decimal number)  |
+| `nextFloat()`      | `float` (Small decimal)    |
+| `nextLong()`       | `long` (Large integer)     |
+| `nextShort()`      | `short` (Small integer)    |
+| `nextByte()`       | `byte` (Very small integer)|
+| `nextBoolean()`    | `boolean` (true/false)     |
+
+📌 **Note:** If the user enters incorrect input (for example, entering `a` when `nextInt()` expects a number), it will result in an error (`InputMismatchException`).
+
+---
+
+## **5. Reading from Files with Scanner**
+The Scanner class is used not only for **reading input from the keyboard**, but also for **reading data from files**.
+```java
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+public class FileScannerExample {
+    public static void main(String[] args) {
+        try {
+            File file = new File("veri.txt");
+            Scanner scanner = new Scanner(file);
+
+            while (scanner.hasNextLine()) {
+                String satir = scanner.nextLine();
+                System.out.println(satir);
+            }
+
+            scanner.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("Dosya bulunamadı!");
+        }
+    }
+}
+```
+### **Explanations:**
+- `new File("data.txt")` → Opens the `"data.txt"` file.
+- `hasNextLine()` → **Continues reading as long as there are lines left in the file.**
+- `nextLine()` → **Reads the file line by line.**
+- If the file doesn't exist, a `FileNotFoundException` will be thrown.
+
+---
+
+## **6. Splitting Strings Based on a Delimiter with Scanner**
+Scanner can be used to split strings based on **commas, spaces, or special characters**.
+
+```java
+import java.util.Scanner;
+
+public class ScannerDelimiterExample {
+    public static void main(String[] args) {
+        String veri = "Ahmet,Mehmet,Ayşe,Fatma";
+        Scanner scanner = new Scanner(veri);
+        scanner.useDelimiter(",");
+
+        while (scanner.hasNext()) {
+            System.out.println(scanner.next());
+        }
+
+        scanner.close();
+    }
+}
+```
+### **Output:**
+```
+Ahmet
+Mehmet
+Ayşe
+Fatma
+```
+
+📌 **Summary:** We set **comma** as the delimiter with `scanner.useDelimiter(",")`.
+
+---
+
+## **7. Closing the Scanner (`close()`)**
+The Scanner object must be **closed after use**, otherwise, a resource leak may occur.
+
+```java
+scanner.close();
+```
+
+💡 **If the Scanner is not closed, it can cause a memory leak!**
+
+---
+
+## **8. Repeatedly Getting Input from the User with Scanner**
+If we need to **continuously get input** from the user, we can use a **loop**.
+
+```java
+import java.util.Scanner;
+
+public class ScannerLoopExample {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        while (true) {
+            System.out.print("Bir sayı girin (Çıkış için -1): ");
+            int sayi = scanner.nextInt();
+            
+            if (sayi == -1) {
+                System.out.println("Çıkış yapıldı.");
+                break;
+            }
+            
+            System.out.println("Girdiğiniz sayı: " + sayi);
+        }
+
+        scanner.close();
+    }
+}
+```
+
+📌 **The user can continue inputting data until they enter `-1`.**
+
+---
+
+## **9. Summary**
+- **Scanner** is used for **getting input from the user**, **reading files**, and **parsing strings**.
+- Different data types can be read using methods like `nextInt()`, `nextDouble()`, `nextLine()`, `next()`.
+- **To read data from files**, `Scanner(File file)` can be used.
+- **To split by a specific character**, `useDelimiter()` can be applied.
+- It should be closed with `scanner.close();` to prevent resource leaks.
+
+🚀 **Scanner is one of the most commonly used classes for input in Java!**
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
