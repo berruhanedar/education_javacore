@@ -2,7 +2,7 @@ package com.berruhanedar._1_week;
 
 import java.util.Scanner;
 
-public class Week1_examples_1 {
+public class Week1_Examples_1 {
     public static void main(String[] args) {
         /*
        1. Solving a First-Degree Equation with One Unknown (Using Scanner)

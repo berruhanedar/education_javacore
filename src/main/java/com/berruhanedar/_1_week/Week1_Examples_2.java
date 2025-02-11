@@ -1,9 +1,8 @@
 package com.berruhanedar._1_week;
 
-import java.sql.SQLOutput;
 import java.util.Scanner;
 
-public class Week1_examples_2 {
+public class Week1_Examples_2 {
     public static void main(String[] args) {
         /*
 2. Celsius to Fahrenheit Converter (Using Scanner)
