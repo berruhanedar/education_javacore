@@ -1497,22 +1497,23 @@ import java.util.Scanner;
 public class ScannerLoopExample {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        
+
         while (true) {
-            System.out.print("Bir sayı girin (Çıkış için -1): ");
-            int sayi = scanner.nextInt();
-            
-            if (sayi == -1) {
-                System.out.println("Çıkış yapıldı.");
+            System.out.print("Enter a number (Enter -1 to exit): ");
+            int number = scanner.nextInt();
+
+            if (number == -1) {
+                System.out.println("Exiting.");
                 break;
             }
-            
-            System.out.println("Girdiğiniz sayı: " + sayi);
+
+            System.out.println("You entered: " + number);
         }
 
         scanner.close();
     }
 }
+
 ```
 
 📌 **The user can continue inputting data until they enter `-1`.**
@@ -1527,6 +1528,723 @@ public class ScannerLoopExample {
 - It should be closed with `scanner.close();` to prevent resource leaks.
 
 🚀 **Scanner is one of the most commonly used classes for input in Java!**
+
+---
+## Conditional
+
+---
+# **What are Conditional Statements in Java?**
+
+**Conditional statements** allow a program to follow different paths based on specific conditions. We control the execution of certain blocks using **logical comparisons and conditions**.
+
+The main conditional statements used in Java are:
+
+1. `if` and `if-else` statements
+2. `else if` (multiple conditions)
+3. `switch-case` structure
+4. **Ternary (`?:`) operator**
+5. **Short-Circuit (`&&` and `||`) operators**
+
+---
+
+## **1. `if` and `if-else` Structure**
+### **1.1 `if` Statement**
+- **The code is executed when the condition is true.**
+- **If false, nothing happens.**
+
+**Example 1: Simple `if` usage**
+```java
+public class IfExample {
+    public static void main(String[] args) {
+        int number = 10;
+
+        if (number > 5) { // Is the condition true? Yes!
+            System.out.println("The number is greater than 5.");
+        }
+    }
+}
+
+```
+
+**Output:**
+```
+The number is greater than 5.
+```
+- The if block executed because `number > 5`.
+
+---
+### **1.2 `if-else` Structure**
+- **If the condition is `true`, the `if` block is executed.**
+- **If the condition is `false`, the `else` block is executed.**
+
+**Example 1: Simple `if-else` usage**
+```java
+public class IfElseExample {
+    public static void main(String[] args) {
+        int number = 3;
+
+        if (number > 5) {
+            System.out.println("The number is greater than 5.");
+        } else {
+            System.out.println("The number is less than or equal to 5.");
+        }
+    }
+}
+
+```
+**Output:**
+```
+The number is less than or equal to 5.
+```
+- Since `number = 3` the `if` block did not execute, and the , `else`  block executed.
+---
+## **2. `else if` (Multiple Conditions)**
+- **`else if` is used to test multiple conditions.**
+- **The first true condition is executed, and the others are skipped.**
+
+**Example 3: Usage of `else if`**
+```java
+public class ElseIfExample {
+    public static void main(String[] args) {
+        int grade = 75;
+
+        if (grade >= 90) {
+            System.out.println("Letter Grade: A");
+        } else if (grade >= 80) {
+            System.out.println("Letter Grade: B");
+        } else if (grade >= 70) {
+            System.out.println("Letter Grade: C");
+        } else {
+            System.out.println("Letter Grade: F");
+        }
+    }
+}
+
+```
+**Output:**
+```
+Letter Grade: C
+```
+- Since `grade = 75`, meaning `grade >= 70`, **only "Letter Grade: C"** was printed.
+---
+## **3. `switch-case` Structure**
+- **Checks if a variable is equal to specific values.**
+- **The corresponding `case` is executed based on the condition.**
+- **If no `case` matches, the `default` block is executed.**
+- **If `break` is not used after each case, all subsequent cases will execute.**
+
+### **Example 4: Day Name with `switch-case`**
+```java
+public class SwitchExample {
+    public static void main(String[] args) {
+        int day = 3;
+
+        switch (day) {
+            case 1:
+                System.out.println("Monday");
+                break;
+            case 2:
+                System.out.println("Tuesday");
+                break;
+            case 3:
+                System.out.println("Wednesday");
+                break;
+            case 4:
+                System.out.println("Thursday");
+                break;
+            default:
+                System.out.println("Invalid day number");
+        }
+    }
+}
+
+```
+**Output:**
+```
+Wednesday
+```
+- When `day = 3`, `case 3` was executed.
+
+---
+## **4. Ternary (`?:`) Operator**
+- **Used to shorten conditional statements.**
+- **Provides `if-else` logic in a single line.**
+- **Usage:**
+```java
+    (condition) ? "executes if true" : "executes if false"
+```
+### **Example 5: Usage of the Ternary Operator**
+```java
+public class TernaryExample {
+    public static void main(String[] args) {
+        int number = 10;
+        String sonuc = (sayi > 5) ? "Big" :  "Small or equal";
+        System.out.println(result);
+    }
+}
+```
+**Output:**
+```
+Big
+```
+- Since `number > 5`, the value `Big` is assigned.
+
+---
+## **5. Short-Circuit (`&&` and `||`) Operators**
+**Short-circuiting** is an optimization used to **avoid unnecessary calculations**.
+
+| Operator | Description |
+|----------|------------|
+| `&&` (AND) | If the first condition is `false`, it **does not evaluate** the second condition. |
+| `||` (OR) | If the first condition is `true`, it **does not evaluate** the second condition. |
+---
+### **Example 6: Using Short-Circuit with `&&`**
+```java
+public class ShortCircuitExample {
+    public static void main(String[] args) {
+        int a = 5;
+        int b = 10;
+
+        if (a > 10 && ++b > 15) { // `a > 10` is already false, so it doesn't check the second condition
+            System.out.println("Condition met.");
+        }
+        System.out.println("b: " + b); // b was not incremented!
+    }
+}
+```
+**Output:**
+```
+b: 10
+```
+- Since `a > 10` is **false**, `++b` does not execute, and `b` remains the same.
+---
+### **Example 7: Using Short-Circuit with `||`**
+```java
+public class ShortCircuitExample2 {
+    public static void main(String[] args) {
+        int x = 5;
+        int y = 10;
+
+        if (x < 10 || ++y > 15) { // `x < 10` is true, so the second condition is not evaluated!
+            System.out.println("Condition met.");
+        }
+        System.out.println("y: " + y); // y was not incremented!
+    }
+}
+```
+**Output:**
+```
+Condition met.
+y: 10
+```
+- Since`x < 10` **is true** `++y` does not execute.
+
+---
+## **Conclusion**
+| Structure | Purpose |
+|-----------|---------|
+| `if` | Test a specific condition |
+| `if-else` | Execute an alternative block if the condition is false |
+| `else if` | Check multiple conditions |
+| `switch-case` | Execute based on matching specific values |
+| `?:` (Ternary) | Short `if-else` expressions |
+| `&&`, `||` | Prevent unnecessary operations with short-circuit logic |
+
+These conditional structures are the building blocks for creating **decision-making mechanisms** in Java programs. 🚀
+
+---
+
+## Loop
+
+# **What is a Loop in Java?**
+Loops are used to **repeat an operation until a specific condition is met**. The most commonly used loops in Java are:
+
+1. **for** loop
+2. **while** loop
+3. **do-while** loop
+4. **for-each (enhanced for loop)**
+
+Along with these loops, control statements like **`break` and `continue`** can be used to manage the flow of the loop.
+
+---
+## **1. `for` Loop**
+The `for` loop is used for performing operations when the **number of repetitions is known**. **Before the loop runs, the condition and the increment/decrement values are defined.**
+
+**Structure:**
+```java
+for (initial_value; condition; increment/decrement) {
+    // Loop block
+}
+```
+### **Example 1: Print from 1 to 5**
+```java
+public class ForLoopExample {
+    public static void main(String[] args) {
+        for (int i = 1; i <= 5; i++) {
+            System.out.println("i: " + i);
+        }
+    }
+}
+```
+**Output:**
+```
+i: 1
+i: 2
+i: 3
+i: 4
+i: 5
+```
+- Starts with `i = 1` 
+- Runs as long as `i <= 5`
+- In each iteration, `i` is incremented with `i++`.
+
+---
+### **Example 2: Print Even Numbers**
+```java
+public class EvenNumbers {
+    public static void main(String[] args) {
+        for (int i = 2; i <= 10; i += 2) {
+            System.out.println("Even number: " + i);
+        }
+    }
+}
+```
+**Output:**
+```
+Even number: 2
+Even number: 4
+Even number: 6
+Even number: 8
+Even number: 10
+```
+- Starts with `i = 2`.
+- Runs as long as `i <= 10`.
+- `i` is **increased by 2** in each iteration with `i += 2`.
+
+---
+## **2. `while` Loop**
+The `while` loop is a loop that runs **as long as the condition is true**. It is used in situations where the number of iterations is **not known in advance**.
+
+**Structure:**
+```java
+while (condition) {
+    // Loop block
+}
+```
+### **Örnek 3: `while` ile Sayı Yazdırma**
+```java
+public class WhileLoopExample {
+    public static void main(String[] args) {
+        int i = 1;
+        
+        while (i <= 5) {
+            System.out.println("i: " + i);
+            i++; // i is incremented, otherwise it would be an infinite loop.
+        }
+    }
+}
+```
+
+**Output:**
+```
+i: 1
+i: 2
+i: 3
+i: 4
+i: 5
+```
+- **Starts with `i = 1`**.
+- **Runs as long as the condition `i <= 5` is true**.
+- **In each iteration, `i++` is incremented**.
+---
+
+### **Example 4: Get User Input with `while` Loop**
+```java
+import java.util.Scanner;
+
+public class WhileUserInput {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int number;
+
+        System.out.println("Enter numbers until you input 5:");
+
+        while (true) {  // Infinite loop
+            number = scanner.nextInt();
+            if (number == 5) {
+                System.out.println("Loop ended.");
+                break; // The loop breaks when 5 is entered.
+            }
+        }
+    }
+}
+```
+**Example Input/Output:**
+```
+Enter numbers until you input 5: 
+1
+2
+3
+5
+Loop ended.
+
+```
+- **The user enters data until 5 is input**.
+- **When 5 is entered, the loop ends with `break;`**.
+
+---
+
+## **3. `do-while` Loop**
+The `do-while` loop, **executes the loop first and then checks the condition**. **It runs at least once, even if the condition is false.**
+
+**Structure:**
+```java
+do {
+    // Loop block
+} while (condition);
+```
+---
+
+### **Example 5: Get Password from User with `do-while` Loop**
+```java
+import java.util.Scanner;
+
+public class DoWhileExample {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int password;
+
+        do {
+            System.out.print("Enter the password (1234): ");
+            password = scanner.nextInt();
+        } while (password != 1234);
+
+        System.out.println("Login successful!");
+    }
+}
+```
+**Example Input/Output:**
+```
+Enter the password (1234): 1111 
+Enter the password (1234): 2222 
+Enter the password (1234): 1234 
+Login successful!
+```
+- **It repeats until the correct password is entered**.
+- **It runs at least once because the `do` block runs first**.
+
+---
+
+## **4. `for-each` Loop**
+`for-each` is used to iterate through **arrays and collections** (Array, List, Set, etc.) more easily.
+
+**Syntax:**
+```java
+for (DataType element : Array/Collection) {
+    // Loop body
+}
+```
+
+---
+
+### **Example 6:  Printing Array Elements with for-each**
+```java
+public class ForEachExample {
+    public static void main(String[] args) {
+        int[] numbers = {10, 20, 30, 40, 50};
+
+        for (int number : numbers) {
+            System.out.println("Number: " + number);
+        }
+    }
+}
+
+```
+**Output:**
+```
+Number: 10
+Number: 20
+Number: 30
+Number: 40
+Number: 50
+
+```
+
+- **`for-each` is more readable compared to the `for` loop.**
+- **It is ideal for iterating over arrays, lists, and sets.**
+---
+
+## **5. Using `break` and `continue` in Loops**
+### **`break`: Terminates the loop completely.**
+### **`continue`: Skips the current iteration and moves to the next one.**
+
+---
+
+### **Example 7: Terminating the Loop with `break`**
+```java
+public class BreakExample {
+    public static void main(String[] args) {
+        for (int i = 1; i <= 10; i++) {
+            if (i == 5) {
+                break; // The loop ends when i equals 5.
+            }
+            System.out.println("i: " + i);
+        }
+    }
+}
+```
+**Output:**
+```
+i: 1
+i: 2
+i: 3
+i: 4
+```
+---
+
+### **Example 8: Skipping with `continue`**
+```java
+public class ContinueExample {
+    public static void main(String[] args) {
+        for (int i = 1; i <= 5; i++) {
+            if (i == 3) {
+                continue; // Skip 3
+            }
+            System.out.println("i: " + i);
+        }
+    }
+}
+```
+**Output:**
+```
+i: 1
+i: 2
+i: 4
+i: 5
+```
+---
+
+## **Summary**
+| Loop Type   | Purpose                              |
+|-------------|--------------------------------------|
+| `for`       | Repeats a fixed number of times.     |
+| `while`     | Repeats as long as the condition is true. |
+| `do-while`  | Runs at least once, then checks the condition. |
+| `for-each`  | Used to iterate over arrays and collections. |
+---
+
+## break, return, continue
+
+---
+
+### **What are `break`, `return`, and `continue` in Java?**
+These three keywords are related to control flow and are used in structures such as loops, methods, and conditional statements. Let's explain how each of them works with detailed examples.
+
+---
+
+## **1. `break` Keyword**
+The `break` keyword is typically used to **break (terminate) loops**. It is also used in **`switch-case`** structures.
+
+**How it works:**
+- When `break` is called, it **completely terminates the associated loop**.
+- When used in nested loops, it only **breaks the loop it is directly inside**.
+
+---
+
+### **Example 1: Breaking the Loop**
+```java
+```java
+public class BreakExample {
+    public static void main(String[] args) {
+        for (int i = 1; i <= 10; i++) {
+            if (i == 5) {
+                System.out.println("Loop reached 5 and was terminated.");
+                break; // Loop ends here.
+            }
+            System.out.println("i: " + i);
+        }
+    }
+}
+```
+**Output:**
+```
+i: 1
+i: 2
+i: 3
+i: 4
+Loop reached 5 and was terminated.
+```
+- When `i == 5`, `break` is executed, and the loop completely terminates.
+
+---
+
+### **Example 2: Using `break` in Nested Loops**
+```java
+public class NestedBreakExample {
+    public static void main(String[] args) {
+        for (int i = 1; i <= 3; i++) {
+            for (int j = 1; j <= 3; j++) {
+                if (j == 2) {
+                    break; // Only breaks the inner loop
+                }
+                System.out.println("i: " + i + ", j: " + j);
+            }
+        }
+    }
+}
+
+```
+
+**Output:**
+```
+i: 1, j: 1
+i: 2, j: 1
+i: 3, j: 1
+```
+- - When `j == 2`, the inner loop ends, but the outer loop continues.
+
+---
+
+## **2. `return` Keyword**
+The `return` statement is used to return a value from a method or terminate the method completely.
+
+**How it Works:**
+- If a method's return type is **`void`**, `return;` will **terminate the method early**.
+- If the method's return type is a value (e.g., **int, String, boolean, etc.**), it is mandatory to return a value using `return`.
+
+### **Example 1: Terminating a Method with `return`**
+```java
+public class ReturnExample {
+    public static void main(String[] args) {
+        System.out.println("Method is called...");
+        testMethod();
+        System.out.println("This line does not execute because the method was terminated with return.");
+    }
+
+    public static void testMethod() {
+        System.out.println("Method started.");
+        return;  // Method terminates here.
+        // System.out.println("This line never runs."); // This would cause an error
+    }
+}
+
+```
+**Output:**
+```
+Method is called... 
+Method started.
+```
+- As soon as `return;` is called, the method terminates.
+
+---
+
+### **Example 2: Returning a Value with `return`**
+```java
+public class SumExample {
+    public static void main(String[] args) {
+        int result = addition(5, 10);
+        System.out.println("Sum: " + result);
+    }
+
+    public static int addition(int a, int b) {
+        return a + b; // Returns the sum of a + b
+    }
+}
+```
+**Sum:**
+```
+Toplam: 15
+```
+- The method returns the result of the addition using `return a + b;`.
+
+---
+
+## **3. `continue` Keyword**
+`continue` is used to skip the current iteration within a loop and proceed to the next one. It **does not break the loop**, it just **skips that specific step when a condition is met**.
+
+**How it Works:**
+- When `continue` is called, the remaining code in the loop is not executed, and **the next iteration begins**.
+- It is commonly used to **skip specific conditions**.
+
+---
+
+### **Example 1: Skipping Odd Numbers**
+```java
+public class ContinueExample {
+    public static void main(String[] args) {
+        for (int i = 1; i <= 10; i++) {
+            if (i % 2 != 0) { // For odd numbers
+                continue; // Skip the remaining code and move to the next iteration.
+            }
+            System.out.println("Even number: " + i);
+        }
+    }
+}
+```
+**Output:**
+```
+Even number: 2 
+Even number: 4 
+Even number: 6 
+Even number: 8 
+Even number: 10
+```
+- When `i` is an odd number, `continue` is executed and the remaining part of that iteration is skipped.
+
+### **Example 2: Using `continue` in Nested Loops**
+```java
+public class NestedContinueExample {
+    public static void main(String[] args) {
+        for (int i = 1; i <= 3; i++) {
+            for (int j = 1; j <= 3; j++) {
+                if (j == 2) {
+                    continue; // When `j == 2`, this iteration of the inner loop is skipped.
+                }
+                System.out.println("i: " + i + ", j: " + j);
+            }
+        }
+    }
+}
+
+```
+**Output:**
+```
+i: 1, j: 1
+i: 1, j: 3
+i: 2, j: 1
+i: 2, j: 3
+i: 3, j: 1
+i: 3, j: 3
+```
+- When `j == 2`, `continue` is triggered, skipping the operations for that iteration.
+
+---
+
+## **Result Comparison**
+| Keyword      | Usage Area                                    | Effect                               |
+|--------------|-----------------------------------------------|--------------------------------------|
+| `break`      | To break loops and `switch` blocks            | Completely ends the loop.            |
+| `return`     | To exit from methods                          | Ends the method and returns a value. |
+| `continue`   | To skip a specific iteration in a loop        | Skips the current iteration, loop continues. |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
