@@ -82,11 +82,6 @@ public class _12_1_String {
 
         vocabulary1.hashCode();
         System.out.println(vocabulary1.hashCode());
-
-
-
-
-
     }
 }
 
