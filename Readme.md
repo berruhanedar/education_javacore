@@ -1171,7 +1171,7 @@ In Java, **escape sequences** are special characters that start with a backslash
 
 ---
 
-## **Kaçış Dizileriyle Örnekler**
+## **Examples**
 ### **1. `\n` → New Line r**
 ```java
 public class EscapeExample {
@@ -2024,6 +2024,91 @@ i: 5
 ```
 ---
 
+## What is the difference between for and while loops?
+
+Java `for` and `while` loops are used to perform repetitive tasks. However, they differ in terms of their intended use and how they operate. Here are the key differences:
+
+---
+
+## **1. Key Differences**
+| **Feature**         | **for Loop** | **while Loop** |
+|---------------------|--------------|----------------|
+| **Purpose**          | Used when the number of iterations is known. | Used when the number of iterations is unknown or dependent on a condition. |
+| **Syntax**           | Has a more structured and compact format. | Is more flexible and condition-focused. |
+| **Condition Location**| Defined at the beginning (`for` itself). | Can be changed at the beginning or inside the loop. |
+| **Counter Usage**    | The counter variable is defined at the beginning of the loop. | The counter can be defined outside and incremented within the loop. |
+| **Readability**      | Shorter and more organized. | More flexible, but can sometimes be complex. |
+| **Performance**      | Same, but can be optimized depending on usage. |
+
+---
+
+## **2. Syntax and Usage Examples**
+
+### **2.1. `for` Loop**
+- Suitable for loops that work with a counter.
+- The initialization, condition, and increment are specified on the same line.
+
+```java
+for (int i = 0; i < 5; i++) {
+    System.out.println("i value: " + i);
+}
+```
+✅ **Advantage**: The loop variable (`i`) is defined within the loop, so it remains **local** and the code is easier to read.
+
+---
+### **2.2. `while` Loop**
+- Runs as long as the condition is true, and is preferred when the **number of iterations is unknown**.
+- The loop variable is usually defined outside.
+
+```java
+int i = 0;
+while (i < 5) {
+        System.out.println("i value: " + i);
+i++;
+        }
+```
+✅ **Advantage**: It is **flexible**, as the condition can be modified from elsewhere.
+
+⚠️ **Note!** If the counter is forgotten, there is a risk of entering an **infinite loop**.
+
+---
+
+## **3. Loop Usage Scenarios**
+
+| **Condition** | **for** | **while** |
+|---------------|---------|-----------|
+| Is the number of iterations known? | ✅ **Yes** | ❌ No |
+| Will a counter variable be used? | ✅ Yes | ❌ No |
+| Should the usage be compact? | ✅ Yes | ❌ No |
+| Can the condition change inside the loop? | ❌ No | ✅ Yes |
+| Is there a higher risk of entering an infinite loop? | ❌ Less | ✅ More |
+
+---
+## **4. Special Case: `do-while` Loop**
+- Similar to the `while` loop, but the **condition is checked at the end**.
+- The **loop runs at least once**.
+
+```java
+int i = 0;
+do {
+    System.out.println("i value: " + i);
+    i++;
+} while (i < 5);
+
+```
+✅ **Advantage**: Ideal for taking input from the user or for tasks that need to run at least once.
+
+---
+
+### **Conclusion**
+- The **`for` loop** is ideal for situations that require a **specific number of iterations**.
+- The **`while` loop** is suitable for tasks that need to run **based on a condition**.
+- The **`do-while` loop** is used for cases where the loop is **guaranteed to run at least once**.
+
+**Which loop you choose depends on your needs!** 🚀
+
+---
+
 ## **Summary**
 | Loop Type   | Purpose                              |
 |-------------|--------------------------------------|
@@ -2226,6 +2311,568 @@ i: 3, j: 3
 | `break`      | To break loops and `switch` blocks            | Completely ends the loop.            |
 | `return`     | To exit from methods                          | Ends the method and returns a value. |
 | `continue`   | To skip a specific iteration in a loop        | Skips the current iteration, loop continues. |
+
+
+## Cast
+# **📌 What is Casting in Java? (Detailed Explanation)**
+
+## **🔹 1. What is Casting?**
+In Java, **Casting** refers to the process of **converting a variable or object from one data type to another**.
+
+Casting can be divided into **two main categories:**
+1. **Converting Between Primitive Types**
+    - **Widening Cast (Implicit Cast)**
+    - **Narrowing Cast (Explicit Cast)**
+
+2. **Converting Between Reference Types (Objects)**
+    - **Upcasting**
+    - **Downcasting**
+   
+---
+# **🔹 2. Converting Between Primitive Types**
+## **✅ 2.1 Widening Cast (Implicit Cast)**
+- **A smaller data type can be automatically assigned to a larger data type.**
+- **No data loss occurs.**
+- **This conversion is done automatically (implicitly).**
+
+### **📌 Example**
+```java
+public class WideningExample {
+    public static void main(String[] args) {
+        int number = 100;
+        double wideNumber = number; // Automatic conversion (int → double)
+        
+        System.out.println("int value: " + number);
+        System.out.println("converted to double: " + wideNumber);
+    }
+}
+```
+**Output:**
+```
+int value: 100 
+converted to double: 100.0
+```
+
+
+📌 **Important Notes:**
+- **Conversions from `byte → short → int → long → float → double` are automatic.**
+- **There is no data loss, as the widening type can hold more data.**
+
+---
+
+## **✅ 2.2 Narrowing Cast (Explicit Cast)**
+- **A larger data type is converted to a smaller data type.**
+- **There may be data loss or precision loss.**
+- **It must be done manually (Explicit Cast).**
+
+### **📌 Example**
+```java
+public class NarrowingExample {
+    public static void main(String[] args) {
+        double largeNumber = 9.78;
+        int smallNumber = (int) largeNumber; // Explicit conversion (double → int)
+
+        System.out.println("double value: " + largeNumber);
+        System.out.println("converted to int: " + smallNumber);
+    }
+}
+```
+
+**Output:**
+```
+double value: 9.78
+converted to int: 9
+```
+
+📌 **Important Notes:**
+- **There may be data loss in conversions from `double → float → long → int → short → byte`.**
+- **When converting fractional numbers to integer types like `int`, the decimal part is lost.**
+
+---
+
+## **✅ 2.3 `char` and `int` Conversion**
+📌 **`char` and `int` types can be converted to each other based on their ASCII values.**
+
+```java
+public class CharToIntExample {
+    public static void main(String[] args) {
+        char character = 'A';
+        int ascii = character; // ASCII code of the character 'A'
+
+        System.out.println("Character: " + character);
+        System.out.println("ASCII Code: " + ascii);
+    }
+}
+```
+
+**Output:**
+```
+Character: A 
+ASCII Code: 65
+```
+
+---
+
+**Reverse Conversion:**
+```java
+int code = 97;
+char character = (char) code; // ASCII 97 → 'a'
+
+System.out.println("ASCII Code: " + code);
+System.out.println("Character: " + character);
+
+```
+**Output:**
+```
+ASCII Code: 97
+Character: a
+```
+
+---
+
+# **📌 String ⇄ int Conversion in Java (Casting)**
+In Java, **`String` ⇄ `int` conversion** can be done using different methods.
+
+---
+
+## **✅ 1. Converting `String` to `int`**
+📌 **`Integer.parseInt(String)`** and **`Integer.valueOf(String)`** are used.
+
+### **📌 Example 1: Converting String to int using `parseInt()`**
+```java
+public class StringToIntExample {
+    public static void main(String[] args) {
+        String numberStr = "123"; // String data
+        int number = Integer.parseInt(numberStr); // String → int conversion
+        
+        System.out.println("String: " + numberStr);
+        System.out.println("int: " + number);
+    }
+}
+```
+
+**Output:**
+```
+String: 123 
+int: 123
+```
+
+📌 **Important:**
+- `parseInt()` can only convert **strings containing integers**.
+- Invalid strings like `"123abc"` will throw a `NumberFormatException`.
+
+🚨 **Incorrect Usage:**
+```java
+String invalidStr = "123abc";
+int number = Integer.parseInt(invalidStr); // ERROR! NumberFormatException
+```
+
+---
+
+### **📌 Example 2: Converting String to int using `valueOf()`**
+📌 **`Integer.valueOf(String)`** returns an **`Integer` (Wrapper Class)** instead of `int`.
+```java
+public class ValueOfExample {
+    public static void main(String[] args) {
+        String numberStr = "456";
+        int number = Integer.valueOf(numberStr); // String → Integer
+        
+        System.out.println("int value: " + number);
+    }
+}
+```
+📌 **Difference between `parseInt()` and `valueOf()`:**
+- **`parseInt()`** → returns `int`.
+- **`valueOf()`** → returns `Integer`.
+
+---
+
+## **✅ 2. Converting `int` to `String`**
+📌 **`String.valueOf(int)`** and **`Integer.toString(int)`** are used.
+
+### **📌 Example 3: Converting int to String using `String.valueOf(int)`**
+```java
+public class IntToStringExample {
+    public static void main(String[] args) {
+        int number = 789;
+        String numberStr = String.valueOf(number); // int → String
+        
+        System.out.println("int: " + number);
+        System.out.println("String: " + numberStr);
+    }
+}
+
+```
+📌 **This method can also convert types like, `double`, `float`, `boolean` to `String`.**
+
+---
+
+### **📌 Example 4: Converting int to String using `Integer.toString(int)`**
+```java
+public class IntToStringExample2 {
+    public static void main(String[] args) {
+        int number = 1234;
+        String numberStr = Integer.toString(number); // int → String
+        
+        System.out.println("String value: " + numberStr);
+    }
+}
+```
+📌 Difference between `String.valueOf()` and `Integer.toString()`:
+
+- **`String.valueOf(int)`** → Works for all data types (`boolean`, `double`, etc.).
+- **`Integer.toString(int)`** → Used only for `int` type.
+
+---
+
+## **✅ 3. Alternative: Using `+ ""`**
+📌 **We can use `+ ""` to convert an `int` type number to a `String`.**
+```java
+public class PlusStringExample {
+    public static void main(String[] args) {
+        int number = 500;
+        String numberStr = number + ""; // int → String
+        
+        System.out.println("String value: " + numberStr);
+    }
+}
+```
+📌 **This method is less efficient, and it is recommended to use `toString()` or `valueOf()` instead.**
+
+---
+
+# **📌 4. Summary**
+| **Conversion** | **Method** | **Example Usage** |
+|----------------|------------|-------------------|
+| **`String` → `int`** | `Integer.parseInt(String)` | `int number = Integer.parseInt("123");` |
+| **`String` → `Integer`** | `Integer.valueOf(String)` | `Integer number = Integer.valueOf("456");` |
+| **`int` → `String`** | `String.valueOf(int)` | `String str = String.valueOf(789);` |
+| **`int` → `String`** | `Integer.toString(int)` | `String str = Integer.toString(1234);` |
+| **`int` → `String`** | `+ ""` method | `String str = 500 + "";` |
+
+📌 **By using these methods, you can perform safe conversions between `String` and `int` in Java! 🚀**
+
+--- 
+
+## ## Java String Pool Concept
+
+---
+No, when **`String word = "";`** is written, **`new String()` is not called in the background**. This is because **Java utilizes the String Constant Pool (String Pool) mechanism**.
+
+---
+
+## **1. Java String Pool Concept**
+- When **`String word = "";`** is written, literal strings like `"Hello"` are stored in the **String Constant Pool**.
+- If a **`String` with the same value already exists** in the pool, a new object is not created, and the existing object is referenced.
+- **This ensures memory optimization** and works more efficiently compared to using `new String()`.
+
+### **Example and Explanation**
+```java
+String word1 = "Hello"; // Stored in the String Pool
+String word2 = "Hello"; // Uses the same reference (does not create a new object)
+
+System.out.println(word1 == word2); // true (They point to the same object)
+```
+Here, the value `"Hello"` is added to the String Pool the first time it's used, and `word2` references the same object.
+
+---
+
+## **2. What Happens When Using `new String()`?**
+If we use **`new String("Hello")`**:
+- A **new `String` object is created in the Heap each time**.
+- **String Pool is not used**, so even if the values are the same, different objects may be created.
+
+```java
+String word1 = new String("Hello");
+String word2 = "Hello";
+
+System.out.println(word1 == word2); // false (Different objects)
+System.out.println(word1.equals(word2)); // true (Contents are the same)
+```
+The **`==` operator** compares memory addresses, so it returns false.
+
+The **`equals()` method** compares the contents, so it returns true.
+
+---
+
+## **3. Using the `intern()` Method with String Pool**
+If we want to **add an object created with `new String("Hello")`** to the String Pool, we can use the `.intern()` method.
+
+```java
+String word1 = new String("Hello").intern();
+String word2 = "Hello";
+
+System.out.println(word1 == word2); // true (References the same object in the pool)
+```
+The `.intern()` method uses the `String` from the pool if one with the same value exists, otherwise it adds it.
+
+---
+
+## **4. Summary and Conclusion**
+| **Code** | **What Happens in the Background?** | **Memory Usage** |
+|----------|------------------------------------|------------------|
+| `String word = "";` | Uses the String Pool, **does not create a new object**. | **Memory efficient** |
+| `String word = new String("");` | Creates a **new object in the Heap**, String Pool is not used. | **Unnecessary memory consumption** |
+| `String word = new String("").intern();` | Added to the String Pool and the object from the pool is used. | **Memory is optimized** |
+
+✅ **The best practice is generally using literals like `"..."`.**  
+⚠️ **`new String("")` should be avoided as it is unnecessary.** 🚀
+
+
+## What's the difference between `String word = new String();` and `String word = "";`?
+
+---
+
+In Java, `String` objects can be created in two different ways:
+
+1. **Creating with `new String()`**
+2. **Creating directly with `""` (literal)**
+
+Let's explore the differences between these two approaches.
+
+---
+
+## **1. Using `new String()`**
+```java
+String word1 = new String("Hello");
+```
+Creates a new `String` object in the Heap memory.  
+Does not use the String pool, and creates a new object each time.  
+May consume more memory and lead to unnecessary object creation.
+
+---
+
+## **2. Using `String` Literal**
+```java
+String word2 = "Hello";
+
+```
+Stored in the String pool, meaning if the same string has been created before, it can be reused.  
+Works more memory efficiently.  
+The JVM uses the String Constant Pool mechanism to avoid creating String objects with the same value repeatedly.
+
+---
+
+## **3. Memory Management Difference**
+### **Heap vs. String Pool**
+| **Method** | **Where is it Stored?** | **Does a New Object Get Created?** | **Performance** |
+|------------|-------------------------|-----------------------------------|-----------------|
+| `new String("Hello")` | Heap (New object each time) | **Yes** | Slower |
+| `"Hello"` (Literal) | **String Pool** | **No (If it exists in the pool)** | Faster |
+
+---
+
+## **4. Comparison (`==` vs. `equals()`)**
+- `==` compares **references**.
+- `equals()` compares **contents (values)**.
+
+---
+
+Example:
+```java
+String str1 = new String("Hello");
+String str2 = "Hello";
+
+System.out.println(str1 == str2); // false (Different objects)
+System.out.println(str1.equals(str2)); // true (Content is the same)
+
+String str3 = "Hello";
+System.out.println(str2 == str3); // true (They share the same String Pool)
+```
+str1 is a new object in the heap, while str2 and str3 are shared within the same pool.
+
+---
+
+## **5. When Should We Use Which Method?**
+| **Scenario** | **Recommended Method** |
+|--------------|------------------------|
+| **General string usage** | `"Hello"` (**Using the String pool is more efficient**) |
+| **When a mutable string is required** | `StringBuilder` or `StringBuffer` |
+| **When `String` objects need to be created in different memory areas** | `new String("Hello")` |
+
+✅ **Generally, the `"String"` literal is preferred because the String Pool optimizes memory.**  
+⚠️ **`new String()` can lead to unnecessary memory usage and is not recommended.** 🚀
+
+## What is the difference between `vocabulary1 == vocabulary2` and `vocabulary1.equals(vocabulary2)` in Java Strings?
+
+In Java, the `==` operator and `.equals()` method work differently when comparing `String` objects. **To understand this difference, it's important to first know how memory management works in Java and how `String` objects are stored.**
+
+---
+
+## **1. Comparison with `==` Operator (Reference Comparison)**
+The `==` operator compares **the memory addresses (references) of two objects**.  
+**It checks whether the two `String` objects are the same object in memory.**
+
+### **Example 1: String Literal Usage (Comparison with `==`)**
+```java
+String vocabulary1 = "Hello";
+String vocabulary2 = "Hello";
+
+System.out.println(vocabulary1 == vocabulary2); // true (They are using the same reference)
+```
+**Why?**
+
+- The value `"Hello"` is stored in the **String Pool**.
+- `vocabulary1` and `vocabulary2` reference the same object, so the `==` operator returns `true`.
+
+---
+
+### **Example 2: Using `new String()` (`==` Comparison)**
+
+```java
+String vocabulary1 = new String("Merhaba");
+String vocabulary2 = new String("Merhaba");
+
+System.out.println(vocabulary1 == vocabulary2); // false (Different objects)
+```
+
+🔹 **Why?**
+- `new String("Merhaba")` creates a new `String` object in the **Heap Memory** each time it is called.
+- The two `String` objects have **different memory addresses**, so `==` returns **false**.
+
+---
+
+## **2. `.equals()` Method Comparison (Content Comparison)**
+The `.equals()` method compares the **contents (values)** of `String` objects.
+
+### **Example 3: Content Comparison using `equals()`**
+```java
+String vocabulary1 = new String("Merhaba");
+String vocabulary2 = new String("Merhaba");
+
+System.out.println(vocabulary1.equals(vocabulary2)); // true (Contents are the same)
+```
+
+✅ When using `.equals()`, the **content of the String objects** is compared.  
+This is why `"Merhaba".equals("Merhaba")` returns **true**.
+
+---
+
+## **3. Adding to the `String` Pool with `intern()`**
+If you want to add a `String` object created with `new String()` to the **String Pool**, you can use the `.intern()` method:
+
+```java
+String vocabulary1 = new String("Merhaba").intern();
+String vocabulary2 = "Merhaba";
+
+System.out.println(vocabulary1 == vocabulary2); // true (Both are in the String Pool)
+```
+
+- The `.intern()` method uses the **object from the String Pool** as a reference.
+- The `==` comparison will return **true**.
+
+---
+
+## **4. Summary: Differences Between `==` and `.equals()`**
+| **Comparison** | **`==` (Reference Comparison)** | **`.equals()` (Content Comparison)** |
+|----------------|--------------------------------|------------------------------------|
+| **Type of Comparison** | Compares **memory addresses** | Compares **content (values)** |
+| **String Pool Usage** | Returns **true if using String Pool**, otherwise **false** | Always compares content, Pool does not matter |
+| **When `new String("...")` is used** | Creates a **new object in Heap**, so returns **false** | Returns **true if contents are the same** |
+| **Recommended Usage** | Used for comparing **memory addresses** | Used for **String content comparisons** (Correct usage) |
+
+✅ **The `.equals()` method is generally recommended**, as `"Merhaba" == "Merhaba"` may **not always be correct**. 🚀
+
+---
+
+## String Concatenation Types: `concat()`, `StringBuilder`, `StringBuffer`
+
+In Java, there are different methods for **String concatenation**. These include the **`+` operator**, the **`concat()` method**, **`StringBuilder`**, and **`StringBuffer`**. Let's examine the differences between them in terms of performance, operation, and usage.
+
+---
+
+## **1. String Concatenation Methods**
+| **Method**        | **Description** | **Thread-Safe** | **Speed** | **Mutability** |
+|-------------------|-----------------|-----------------|-----------|----------------|
+| `+` Operator      | Easy to use, uses `StringBuilder` in the background. | ❌ No | Medium | ❌ Immutable |
+| `concat()`        | Combines with a `String` object. | ❌ No | Medium | ❌ Immutable |
+| `StringBuilder`   | High performance, not thread-safe. | ❌ No | **Fast** | ✅ Mutable |
+| `StringBuffer`    | Thread-safe, but slower than `StringBuilder`. | ✅ Yes | Slow | ✅ Mutable |
+
+---
+
+## **2. Details of String Concatenation Methods**
+
+### **2.1 Concatenation with `+` Operator**
+- **Simple and understandable**, but performance can be low because **it creates a new `String` object with each concatenation**.
+
+```java
+String str1 = "Hello";
+String str2 = " World";
+String result = str1 + str2;
+System.out.println(result); // "Hello World"
+```
+
+🔴 **Disadvantage:** The `+` operator creates a **new `String` object** with each concatenation, and the old object is garbage collected. This can lead to performance issues in large loops.
+
+---
+
+### **2.2 Concatenation with `concat()` Method**
+- Belongs to the `String` class and serves as an **alternative** to the `+` operator.
+- **Creates a new `String` object**, and the original `String` remains unchanged (`immutable`).
+
+```java
+String str1 = "Hello";
+String str2 = " World";
+String result = str1.concat(str2);
+System.out.println(result); // "Hello World"
+```
+
+🔴 **Disadvantage:** It is not different from the `+` operator because it still **creates a new `String` object**.
+
+---
+
+### **2.3 Concatenation with `StringBuilder` (Preferred Method)**
+- **It is the best method in terms of performance** because `StringBuilder` is a **mutable** object.
+- **It is not thread-safe** (not safe when multiple threads are operating at the same time).
+
+```java
+StringBuilder sb = new StringBuilder("Hello");
+sb.append(" World");
+System.out.println(sb.toString()); // "Hello World"
+```
+
+✅ **Advantages:**
+- Unlike `+` or `concat()`, it does not **create a new `String` object**.
+- It works **faster** by modifying the **same object in memory**.
+
+---
+
+### **2.4 Concatenation with `StringBuffer`**
+- It is almost identical to `StringBuilder`, but it uses **synchronized** to make it **thread-safe**.
+- **It is preferred in concurrent (multithreading) scenarios**, but it is **slower** than `StringBuilder`.
+
+```java
+StringBuffer sbf = new StringBuffer("Hello");
+sbf.append(" World");
+System.out.println(sbf.toString()); // "Hello World"
+```
+
+✅ **Advantage:** It is **safe** for use in multi-thread environments.  
+🔴 **Disadvantage:** It is **slower** than `StringBuilder`.
+
+---
+
+## **3. Performance Test**
+Now, let's test the performance differences between `+`, `StringBuilder`, and `StringBuffer` for large string concatenation.
+
+### **Performance Test Results (Concatenating 100,000 Characters)**:
+- **`+` Operator Time**: ≈ **0.3561 seconds** (Slow)
+- **`StringBuilder` Time**: ≈ **0.0086 seconds** (Fast)
+- **`StringBuffer` Time**: ≈ **0.0081 seconds** (Fast, but thread-safe)
+
+---
+
+## **4. Which One Should We Use?**
+| **Scenario** | **Recommended Method** |
+|--------------|------------------------|
+| Small-scale string concatenation | `+` operator or `concat()` |
+| **Large data processing or string concatenation inside loops** | **`StringBuilder`** (Fast and efficient) |
+| **Multi-threaded environment (Multithreading)** | **`StringBuffer`** (Thread-safe) |
+
+🔹 **For small operations, you can use `+`, but for large loops, always use `StringBuilder`!** 🚀
+
+
 
 
 
