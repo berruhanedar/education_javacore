@@ -12,12 +12,10 @@ public class _12_2_StringFormat {
         If the file remains open, the cache memory will continue to be used.
         */
 
-    // Formatter
-    // s
-    // d
-    // f
-
-
+        // Formatter
+        // s
+        // d
+        // f
 
     public static final String RESET = "\033[0m";  // Reset color
     public static final String RED = "\033[31m";   // Red
@@ -35,7 +33,6 @@ public class _12_2_StringFormat {
     ✅ On Windows, you should use PowerShell or Windows Terminal instead of CMD.
     */
 
-
     public static void formatter1() {
         // When using a new Formatter, it's good practice to call close() to release system resources
         Formatter formatter = new Formatter();
@@ -46,7 +43,9 @@ public class _12_2_StringFormat {
 
 
     public static void formatter2() {
-
+        String formatterString = String.format("Hello , Your Name : %s , Your Number : %d , Price : %f", " John Doe", 123, 58.54);
+        System.out.println(formatterString);
+        System.out.println();
     }
 
     // Best practice
@@ -55,6 +54,10 @@ public class _12_2_StringFormat {
         String formatterString = String.format("Hello , Your Name : %s , Your Number : %d , Price : %f", " John Doe", 123, 58.54);
         System.out.println(formatterString);
         System.out.println(YELLOW+formatterString+RESET);
+
+        String formatterString2 = String.format("Hello: " + GREEN + "Your Name: %-10s" + RESET + ":" + RED + "T.C: %10d" + RESET + ":" + CYAN + "Price: %.4f " + RESET + ":", "Berru", 11223344, 44.23);
+        System.out.println(formatterString2);
+        System.out.println();
     }
 
     // Best Practice
@@ -68,7 +71,6 @@ public class _12_2_StringFormat {
         System.out.println();
         System.out.printf("Hello,  Your Name : %-10s , Your Number : %-15d , Price : %.3f", name, idNumber, price);
     }
-
 
     public static void main(String[] args) {
         formatter1();
