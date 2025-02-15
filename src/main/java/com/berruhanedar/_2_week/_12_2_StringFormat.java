@@ -17,6 +17,25 @@ public class _12_2_StringFormat {
     // d
     // f
 
+
+
+    public static final String RESET = "\033[0m";  // Reset color
+    public static final String RED = "\033[31m";   // Red
+    public static final String GREEN = "\033[32m"; // Green
+    public static final String YELLOW = "\033[33m";// Yellow
+    public static final String BLUE = "\033[34m";  // Blue
+    public static final String PURPLE = "\033[35m";// Purple
+    public static final String CYAN = "\033[36m";  // Light Blue
+
+    /*
+    ⚠️ Important Notes
+    ❌ ANSI colors are not supported in IDEs like Eclipse.
+    ✅ Works in Terminal, IntelliJ IDEA, and VS Code Terminal.
+    ✅ Supported on Windows 10+ or Linux/macOS.
+    ✅ On Windows, you should use PowerShell or Windows Terminal instead of CMD.
+    */
+
+
     public static void formatter1() {
         // When using a new Formatter, it's good practice to call close() to release system resources
         Formatter formatter = new Formatter();
@@ -35,6 +54,7 @@ public class _12_2_StringFormat {
     public static void formatter3() {
         String formatterString = String.format("Hello , Your Name : %s , Your Number : %d , Price : %f", " John Doe", 123, 58.54);
         System.out.println(formatterString);
+        System.out.println(YELLOW+formatterString+RESET);
     }
 
     // Best Practice
