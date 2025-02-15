@@ -1,11 +1,8 @@
 package com.berruhanedar._2_week;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Random;
-
-import static java.lang.Math.random;
 
 public class _16_1_Array {
 
@@ -26,7 +23,7 @@ public class _16_1_Array {
 
     // Array
     public static String[] arrayMethod2() throws ArrayIndexOutOfBoundsException {
-        String[] city = {"San Francisco", "Melbourne", "New York ", null, "Istanbul", "Tokyo"};
+        String[] city = {"San Francisco", "Melbourne", "New York ", "Istanbul", "Tokyo", "Berlin", "Paris"};
         return city;
     }
 
@@ -41,7 +38,7 @@ public class _16_1_Array {
     // iterative
     public static void arrayMethod4() {
         String[] city = arrayMethod2();
-        // for each
+
         for (int i = 0; i < city.length; i++) {
             System.out.println(_15_4_SpecialColor.BLUE + city[i] + _15_4_SpecialColor.RESET);
         }
@@ -74,7 +71,6 @@ public class _16_1_Array {
         return rndInt;
     }
 
-
     // fill:
     public static void arrayMethod7() {
         int[] number = new int[7];
@@ -93,7 +89,26 @@ public class _16_1_Array {
         }
     }
 
+    public static void arrayMethod8() {
+        String[] originalCity = arrayMethod2();
+        String[] cloneCity = Arrays.copyOf(originalCity, originalCity.length);
 
+        Arrays.sort(cloneCity);
+
+        for (String temp : originalCity) {
+            System.out.println(_15_4_SpecialColor.BLUE + temp + _15_4_SpecialColor.RESET);
+        }
+
+        // Binary Search
+        String searchCity = "Los Angeles";
+        int index = Arrays.binarySearch(cloneCity, searchCity);
+
+        if (index >= 0) {
+            System.out.println(searchCity + _15_4_SpecialColor.PURPLE + " it contains " + _15_4_SpecialColor.RESET);
+        } else {
+            System.out.println(searchCity + _15_4_SpecialColor.GREEN + " does not contain " + _15_4_SpecialColor.BLUE);
+        }
+    }
 
 
     public static void main(String[] args) {
@@ -104,6 +119,6 @@ public class _16_1_Array {
         arrayMethod5();
         arrayMethod6();
         arrayMethod7();
+        arrayMethod8();
     }
-
 }
