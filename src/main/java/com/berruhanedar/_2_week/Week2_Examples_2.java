@@ -4,9 +4,9 @@ import java.sql.SQLOutput;
 import java.util.Scanner;
 
 public class Week2_Examples_2 {
-
-    public static void iterativeFactorial() {
-        long number, result = 1;
+    // Get numerical values from the user
+    public static long isNumber() {
+        long number;
         byte doubleRemainingRight = 3;
         boolean isActive = true;
 
@@ -29,12 +29,9 @@ public class Week2_Examples_2 {
                         // System.exit(0);    -> Another solution: Terminates the entire program by shutting down the JVM
                     } else if (number == 0) {
                         System.out.println(_15_4_SpecialColor.BLUE + "Factorail of " + number + " is 1 .");
-                        result = 1;
+                        return 1 ;
                     } else {
-                        for (int i = 1; i <= number; i++) {
-                            result *= i;
-                        }
-                        System.out.println(_15_4_SpecialColor.YELLOW + "Factorial of " + number + " is " + result + _15_4_SpecialColor.RESET);
+                        iterativeFactorial(number);
                     }
                 } else if (scanner.hasNextDouble()) {
 //                  // doubleRemainingRight = (byte) (doubleRemainingRight - 1);
@@ -58,12 +55,25 @@ public class Week2_Examples_2 {
             }
         }
         scanner.close();
+        return 0L;
     }
 
-    public static void recursiveFactorial() {
+
+    public static void iterativeFactorial(long userData) {
+        long result = 1;
+        for (int i = 1; i <= userData; i++) {
+            // result = result * i ;
+            result *= i;
+        }
+        System.out.println("Number of "+ userData + "!="+ result);
 
     }
 
+    public static long recursiveFactorial(long userData) {
+        if (userData == 0||userData==1)
+            return 1;
+        return userData * recursiveFactorial(userData-1);
+    }
 
     public static void main(String[] args) {
         System.out.println("Please make a selection\n1-) Iterative Factorial\n2-) Recursive Factorial\n3-)Exit");
@@ -71,10 +81,10 @@ public class Week2_Examples_2 {
         int choose = scanner.nextInt();
         switch (choose) {
             case 1:
-                iterativeFactorial();
+                iterativeFactorial(isNumber());
                 break;
             case 2:
-                recursiveFactorial();
+                recursiveFactorial(isNumber());
                 break;
             case 3:
                 System.exit(0);
