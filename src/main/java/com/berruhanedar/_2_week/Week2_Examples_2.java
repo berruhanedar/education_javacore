@@ -1,9 +1,11 @@
 package com.berruhanedar._2_week;
 
+import java.sql.SQLOutput;
 import java.util.Scanner;
 
 public class Week2_Examples_2 {
-    public static void main(String[] args) {
+
+    public static void iterativeFactorial() {
         long number, result = 1;
         byte doubleRemainingRight = 3;
         boolean isActive = true;
@@ -58,13 +60,28 @@ public class Week2_Examples_2 {
         scanner.close();
     }
 
+    public static void recursiveFactorial() {
 
-    public static long factorial(long number) {
-        if (number == 1 || number == 0) {
-            return number;
-        } else {
-            return number * factorial(number - 1);
+    }
+
+
+    public static void main(String[] args) {
+        System.out.println("Please make a selection\n1-) Iterative Factorial\n2-) Recursive Factorial\n3-)Exit");
+        Scanner scanner = new Scanner(System.in);
+        int choose = scanner.nextInt();
+        switch (choose) {
+            case 1:
+                iterativeFactorial();
+                break;
+            case 2:
+                recursiveFactorial();
+                break;
+            case 3:
+                System.exit(0);
+            default:
+                System.out.println("Please enter a correct number:");
         }
     }
+
 
 }
