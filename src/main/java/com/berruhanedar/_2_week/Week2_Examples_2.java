@@ -47,7 +47,8 @@ public class Week2_Examples_2 {
                     scanner.next(); // Clears invalid inputs
                 } else {
                     System.out.println("You have entered a letter.");
-                    break;
+                    //break;
+                    scanner.next();
                 }
             } else {
                 System.out.println("Due to entering a decimal number, your input rights have been exhausted. The program is being terminated by the JVM.");
