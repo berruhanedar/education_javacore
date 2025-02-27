@@ -7,17 +7,6 @@ public class _03_Class_POJO {
    private String name;
    private String surname;
 
-   // Constructor (with patameter)
-   public _03_Class_POJO(String name, String surname) {
-      this.name = name;
-      this.surname = surname;
-   }
-
-   // Constructor (without parameter)
-   public _03_Class_POJO() {
-      this.name = "";
-      this.surname = "";
-   }
 
    // getter and setter
    public String getName() {
@@ -44,5 +33,4 @@ public class _03_Class_POJO {
       System.out.println(pojo.getSurname());
       String nameAndSurname = pojo.getName().toString()+pojo.getSurname().toString();
    }
-
 }
