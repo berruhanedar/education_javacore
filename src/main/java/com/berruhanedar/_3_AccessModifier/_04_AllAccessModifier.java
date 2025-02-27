@@ -1,6 +1,6 @@
 package com.berruhanedar._3_AccessModifier;
 
-import com.berruhanedar._3_week_access._01_PublicAccessModifier;
+import com.berruhanedar._3_week._01_PublicAccessModifier;
 
 public class _04_AllAccessModifier {
     public static void main(String[] args) {

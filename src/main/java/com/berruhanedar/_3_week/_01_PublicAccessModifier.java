@@ -1,4 +1,4 @@
-package com.berruhanedar._3_week_access;
+package com.berruhanedar._3_week;
 
 public class _01_PublicAccessModifier {
     public String publicData="public data";
