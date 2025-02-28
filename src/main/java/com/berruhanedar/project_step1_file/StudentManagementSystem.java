@@ -24,31 +24,23 @@ public class StudentManagementSystem {
 
     }
 
+    //////////////////////////////////////////////////
+    // Login
+    // Register
+    //////////////////////////////////////////////////
     // Add Students
-
     // Student List
-
     // Search Student
-
     // Update Student
-
     // Delete Student
-
-    //////////////////////////////
-
+    //////////////////////////////////////////////////
     // File Create - IO
     // Method That Saves Student Files
-
     // Öethod That Reads Student Files
-
     //////////////////////////////
     // Total Number of Students
-
     // Calculate Student's Grade Average
-
     // Student with the Highest or Lowest Grade
-
     // Student Ranking (Birthdate)
-
     // Console Chose (Add Student)
 }
