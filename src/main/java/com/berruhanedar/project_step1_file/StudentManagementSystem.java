@@ -1,7 +1,10 @@
 package com.berruhanedar.project_step1_file;
 
 import java.io.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Scanner;
 
 public class StudentManagementSystem {
 
@@ -44,8 +47,8 @@ public class StudentManagementSystem {
     // Upload Student List (File)
     private void loadStudentsListFromFile() {
         try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(FILE_NAME))) {
-            studentDtoList=(ArrayList<StudentDto>) objectInputStream.readObject();
-            studentCounter=studentDtoList.size();
+            studentDtoList = (ArrayList<StudentDto>) objectInputStream.readObject();
+            studentCounter = studentDtoList.size();
         } catch (FileNotFoundException fileNotFoundException) {
             System.out.println("Student record not found");
             fileNotFoundException.printStackTrace();
@@ -109,7 +112,58 @@ public class StudentManagementSystem {
     // Calculate Student's Grade Average
     // Student with the Highest or Lowest Grade
     // Student Ranking (Birthdate)
+    ///////////////////////////////////////////////
     // Console Chose (Add Student)
+    public void chooise() {
+        Scanner scanner = new Scanner(System.in);
+        StudentManagementSystem studentManagementSystem = new StudentManagementSystem();
+
+        // Infinite loop
+        while (true) {
+            System.out.println("\n1. Add Student");
+            System.out.println("\n2. List Students");
+            System.out.println("\n3. Search Student");
+            System.out.println("\n4. Update Student");
+            System.out.println("\n5. Delete Student");
+            System.out.println("\n6. Total Number of Students");
+            System.out.println("\n7. Select a Random Student");
+            System.out.println("\n8. Calculate Student's Grade Average");
+            System.out.println("\n9. Show Student with the Highest or Lowest Grade");
+            System.out.println("\n10. Sort Students by Birthdate");
+            System.out.println("\n11.Exit");
+            System.out.println("\n Please enter your select");
+
+            int chooise = scanner.nextInt();
+            scanner.nextLine(); //Stop
+            StudentDto studentDto = new StudentDto();
+            String name, surname;
+            LocalDate birthDate;
+            Double grade;
 
 
+            switch (chooise) {
+                case 1:
+                    System.out.println("Student's name:");
+                    name = scanner.nextLine();
+                    System.out.println("Student's surname:");
+                    surname = scanner.nextLine();
+                    System.out.println("Student's birthdate:");
+                    birthDate = LocalDate.parse(scanner.nextLine());
+                    System.out.println("Student's grade:");
+                    grade = Double.parseDouble(scanner.nextLine());
+                    studentDto.setId(studentCounter);
+                    studentDto.setName(name);
+                    studentDto.setSurname(surname);
+                    studentDto.setBirthDate(birthDate);
+                    studentDto.setGrade(grade);
+                    studentDto.setCreatedDate(new Date(System.currentTimeMillis()));
+                    studentManagementSystem.add(studentDto);
+                    break;
+
+                case 2:
+                    studentManagementSystem.list();
+                    break;
+            }
+        }
+    }
 }
