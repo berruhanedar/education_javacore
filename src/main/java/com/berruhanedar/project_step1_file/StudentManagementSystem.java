@@ -1,9 +1,6 @@
 package com.berruhanedar.project_step1_file;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.util.ArrayList;
 
 public class StudentManagementSystem {
@@ -36,7 +33,7 @@ public class StudentManagementSystem {
     // File Create
     private void saveToFile() {
         try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(FILE_NAME))) {
-            objectOutputStream.writeObject(studentDtoList);
+            objectOutputStream.writeObject(FILE_NAME);
         } catch (IOException io) {
             System.out.println("File write error");
             io.printStackTrace();
@@ -45,6 +42,19 @@ public class StudentManagementSystem {
 
     // File Read
     // Upload Student List (File)
+    private void loadStudentsListFromFile() {
+        try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(FILE_NAME))) {
+            studentDtoList=(ArrayList<StudentDto>) objectInputStream.readObject();
+            studentCounter=studentDtoList.size();
+        } catch (FileNotFoundException fileNotFoundException) {
+            System.out.println("Student record not found");
+            fileNotFoundException.printStackTrace();
+        } catch (IOException io) {
+            System.out.println("File reading error");
+            io.printStackTrace();
+        }
+    }
+
     //////////////////////////////
     // Add Students
     public void add(StudentDto studentDto) {
@@ -72,9 +82,9 @@ public class StudentManagementSystem {
     }
 
     // Update Student
-    public void update(int id, StudentDto dto){
-        for(StudentDto temp : studentDtoList){
-            if(temp.getId() == id){
+    public void update(int id, StudentDto dto) {
+        for (StudentDto temp : studentDtoList) {
+            if (temp.getId() == id) {
                 temp.setName(dto.getName());
                 temp.setSurname(dto.getSurname());
                 temp.setBirthDate(dto.getBirthDate());
