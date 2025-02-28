@@ -15,7 +15,7 @@ import java.util.Date;
 @EqualsAndHashCode
 
 //Student
-public class StudentDTO implements Serializable {
+public class StudentDto implements Serializable {
     //Serializable
     public static final Long serialVersionUID = 1L;
 
@@ -32,11 +32,11 @@ public class StudentDTO implements Serializable {
     }
 
     // Constructor without parameter
-    public StudentDTO() {
+    public StudentDto() {
     }
 
     // Constructor with parameter
-    public StudentDTO(Integer id, String name, String surname, LocalDate birthDate, Double grade) {
+    public StudentDto(Integer id, String name, String surname, LocalDate birthDate, Double grade) {
         this.id = id;
         this.name = name;
         this.surname = surname;
