@@ -1,5 +1,8 @@
 package com.berruhanedar.project_step1_file;
 
+import com.berruhanedar.dto.StudentDto;
+import com.berruhanedar.exceptions.StudentNotFoundException;
+
 import java.io.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -20,12 +23,7 @@ public class StudentManagementSystem {
     // Constructor without parameter
     public StudentManagementSystem() {
         // Load the student list immediately when the program executes
-        loadStudentsListFromFiled();
-    }
-
-    // Upload Student List
-    private void loadStudentsListFromFiled() {
-
+        loadStudentsListFromFile();
     }
 
     //////////////////////////////////////////////////
@@ -49,39 +47,59 @@ public class StudentManagementSystem {
         try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(FILE_NAME))) {
             studentDtoList = (ArrayList<StudentDto>) objectInputStream.readObject();
             studentCounter = studentDtoList.size();
+            System.out.println("Dosyadan yüklenen öğrenci sayısı:");
         } catch (FileNotFoundException fileNotFoundException) {
-            System.out.println("Student record not found");
+            System.out.println("Dosyadan yüklenene öğrenci kaydı bulunamadı");
             fileNotFoundException.printStackTrace();
         } catch (IOException io) {
             System.out.println("File reading error");
             io.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    //////////////////////////////
+    /////////////////////////////////////////////////////////////////
+    // CRUD OPERATIONS
     // Add Students
-    public void add(StudentDto studentDto) {
-        studentDtoList.add(new StudentDto(++studentCounter, studentDto.getName(), studentDto.getSurname(), studentDto.getBirthDate(), studentDto.getGrade()));
+    public void add(StudentDto dto) {
+        studentDtoList.add(new StudentDto(++studentCounter, dto.getName(), dto.getSurname(), dto.getMidTerm(),
+                dto.getFinalTerm(), dto.getBirthDate())
+        );
         System.out.println("Added student");
         // Add to File
         saveToFile();
     }
 
     // Student List
-    public void list() {
+    public void List() {
         if (studentDtoList.isEmpty()) {
-            System.out.println("List is empty");
+            System.out.println("No Students Available");
             return;
         } else {
+            System.out.println("Student List:");
             studentDtoList.forEach(System.out::println);
         }
     }
 
     // Search Student
     public void search(String name) {
-        studentDtoList.stream()
+        /*studentDtoList.stream()
+            .filter(temp -> temp.getName().equalsIgnoreCase(name))
+            .forEach(System.out::println);*/
+
+        boolean found = studentDtoList
+                .stream()
                 .filter(temp -> temp.getName().equalsIgnoreCase(name))
-                .forEach(System.out::println);
+                .peek(System.out::println) // Print if the matching data exists
+                .findAny() // Check if there is any matching student
+                .isPresent();
+
+        // Öğrenci yoksa
+        // If No Student Found
+        if (!found) {
+            throw new StudentNotFoundException(name + " named student not found");
+        }
     }
 
     // Update Student
