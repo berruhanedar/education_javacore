@@ -72,7 +72,7 @@ public class StudentManagementSystem {
     }
 
     // Student List
-    public void List() {
+    public void list() {
         if (studentDtoList.isEmpty()) {
             System.out.println("No Students Available");
             return;
@@ -109,8 +109,9 @@ public class StudentManagementSystem {
                 temp.setName(dto.getName());
                 temp.setSurname(dto.getSurname());
                 temp.setBirthDate(dto.getBirthDate());
-                temp.setGrade(dto.getGrade());
-                System.out.println("Student updated");
+                temp.setMidTerm(dto.getMidTerm());
+                temp.setFinalTerm(dto.getFinalTerm());
+                System.out.println("Student information updated");
                 saveToFile();
                 return;
             }
@@ -120,8 +121,16 @@ public class StudentManagementSystem {
 
     // Delete Student
     public void delete(int id) {
-        studentDtoList.removeIf(temp -> temp.getId() == id);
-        System.out.println("Student deleted");
+        /*studentDtoList.removeIf(temp -> temp.getId() == id);
+        System.out.println("Student deleted");*/
+
+        boolean removed = studentDtoList.removeIf(temp -> temp.getId() == id);
+        if (removed) {
+            System.out.println("Student deleted successfully");
+            saveToFile();
+        } else {
+            throw new StudentNotFoundException("Student not found");
+        }
     }
 
     //////////////////////////////////////////////////
@@ -139,47 +148,107 @@ public class StudentManagementSystem {
         // Infinite loop
         while (true) {
             System.out.println("\n1. Add Student");
-            System.out.println("\n2. List Students");
-            System.out.println("\n3. Search Student");
-            System.out.println("\n4. Update Student");
-            System.out.println("\n5. Delete Student");
-            System.out.println("\n6. Total Number of Students");
-            System.out.println("\n7. Select a Random Student");
-            System.out.println("\n8. Calculate Student's Grade Average");
-            System.out.println("\n9. Show Student with the Highest or Lowest Grade");
-            System.out.println("\n10. Sort Students by Birthdate");
-            System.out.println("\n11.Exit");
-            System.out.println("\n Please enter your select");
+            System.out.println("2. List Students");
+            System.out.println("3. Search Student");
+            System.out.println("4. Update Student");
+            System.out.println("5. Delete Student");
+            System.out.println("6. Total Number of Students");
+            System.out.println("7. Select a Random Student");
+            System.out.println("8. Calculate Student's Grade Average");
+            System.out.println("9. Show Student with the Highest or Lowest Grade");
+            System.out.println("10. Sort Students by Birthdate");
+            System.out.println("11.Exit");
+            System.out.println("Please enter your select");
 
             int chooise = scanner.nextInt();
             scanner.nextLine(); //Stop
-            StudentDto studentDto = new StudentDto();
-            String name, surname;
-            LocalDate birthDate;
-            Double grade;
 
 
             switch (chooise) {
                 case 1:
                     System.out.println("Student's name:");
-                    name = scanner.nextLine();
+                    String name = scanner.nextLine();
+
                     System.out.println("Student's surname:");
-                    surname = scanner.nextLine();
-                    System.out.println("Student's birthdate:");
-                    birthDate = LocalDate.parse(scanner.nextLine());
-                    System.out.println("Student's grade:");
-                    grade = Double.parseDouble(scanner.nextLine());
-                    studentDto.setId(studentCounter);
-                    studentDto.setName(name);
-                    studentDto.setSurname(surname);
-                    studentDto.setBirthDate(birthDate);
-                    studentDto.setGrade(grade);
-                    studentDto.setCreatedDate(new Date(System.currentTimeMillis()));
-                    studentManagementSystem.add(studentDto);
+                    String surname = scanner.nextLine();
+
+                    System.out.println("Student's birthdate (YYYY-MM-DD):");
+                    LocalDate birthDate = LocalDate.parse(scanner.nextLine());
+
+                    System.out.println("Student's midterm grade:");
+                    double midtermGrade = scanner.nextDouble();
+
+                    System.out.println("Student's finalterm grade:");
+                    double finalTermGrade = scanner.nextDouble();
+
+                    studentManagementSystem.add(new StudentDto(++studentCounter, name, surname, midtermGrade, finalTermGrade, birthDate));
                     break;
 
                 case 2:
                     studentManagementSystem.list();
+                    break;
+
+                case 3:
+                    System.out.println("Enter the name of the student to search ");
+                    String searchName = scanner.nextLine();
+                    studentManagementSystem.search(searchName);
+                    break;
+
+                case 4:
+                    studentManagementSystem.list();
+                    System.out.println("Enter the ID of the student to be updated:");
+                    int id = scanner.nextInt();
+                    scanner.nextLine(); // We need this if a String follows an int
+
+                    System.out.println("Enter the new student name:");
+                    String nameUpdate = scanner.nextLine();
+
+                    System.out.println("Enter the new student surname:");
+                    String surnameUpdate = scanner.nextLine();
+
+                    System.out.println("Student's birthdate (YYYY-MM-DD):");
+                    LocalDate birthDateUpdate = LocalDate.parse(scanner.nextLine());
+
+                    System.out.println("Student's midterm grade:");
+                    double midtermUpdate = scanner.nextDouble();
+
+                    System.out.println("Student's final term grade:");
+                    double finalTermUpdate = scanner.nextDouble();
+
+                    StudentDto studentDtoUpdate = StudentDto.builder()
+                            .name(nameUpdate)
+                            .surname(surnameUpdate)
+                            .midTerm(midtermUpdate)
+                            .finalTerm(finalTermUpdate)
+                            .birthDate(birthDateUpdate)
+                            .build();
+
+                    try {
+                        studentManagementSystem.update(id, studentDtoUpdate);
+                    } catch (StudentNotFoundException e) {
+                        System.out.println(e.getMessage());
+                        e.printStackTrace();
+                    }
+                    break;
+
+                case 5:
+                    studentManagementSystem.list();
+                    System.out.println("Enter the ID of the student to be deleted:");
+                    int idDeleted = scanner.nextInt();
+                    studentManagementSystem.delete(idDeleted);
+                    break;
+
+                case 6:
+                    studentManagementSystem.list();
+                    break;
+
+                case 10:
+                    System.out.println("Exiting the system");
+                    System.exit(0);
+                    break;
+
+                default:
+                    System.out.println("You entered the wrong choice");
                     break;
             }
         }
