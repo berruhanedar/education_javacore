@@ -1,12 +1,12 @@
 package com.berruhanedar.project_step1_file;
 
 import com.berruhanedar.dto.StudentDto;
+import com.berruhanedar.enums.EStudentType;
 import com.berruhanedar.exceptions.StudentNotFoundException;
 
 import java.io.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Scanner;
 
 public class StudentManagementSystem {
@@ -64,7 +64,7 @@ public class StudentManagementSystem {
     // Add Students
     public void add(StudentDto dto) {
         studentDtoList.add(new StudentDto(++studentCounter, dto.getName(), dto.getSurname(), dto.getMidTerm(),
-                dto.getFinalTerm(), dto.getBirthDate())
+                dto.getFinalTerm(), dto.getBirthDate(),dto.geteStudentType())
         );
         System.out.println("Added student");
         // Add to File
@@ -111,6 +111,7 @@ public class StudentManagementSystem {
                 temp.setBirthDate(dto.getBirthDate());
                 temp.setMidTerm(dto.getMidTerm());
                 temp.setFinalTerm(dto.getFinalTerm());
+                temp.seteStudentType(dto.geteStudentType());
                 System.out.println("Student information updated");
                 saveToFile();
                 return;
@@ -139,6 +140,23 @@ public class StudentManagementSystem {
     // Calculate Student's Grade Average
     // Student with the Highest or Lowest Grade
     // Student Ranking (Birthdate)
+
+    ///////////////////////////////////////////////
+
+    private EStudentType eStudentTypeMethod() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Select type of student:\n1-) Undergrad\n2-) Graduate\n3-) PhD");
+        int typeChoosie = scanner.nextInt();
+
+        EStudentType switchCaseStudent = switch (typeChoosie) {
+            case 1 -> EStudentType.UNDERGRADUATE;
+            case 2 -> EStudentType.GRADUATE;
+            case 3 -> EStudentType.PHD;
+            default -> EStudentType.OTHER;
+        };
+        return switchCaseStudent;
+    }
+
     ///////////////////////////////////////////////
     // Console Chose (Add Student)
     public void chooise() {
@@ -181,7 +199,7 @@ public class StudentManagementSystem {
                     System.out.println("Student's finalterm grade:");
                     double finalTermGrade = scanner.nextDouble();
 
-                    studentManagementSystem.add(new StudentDto(++studentCounter, name, surname, midtermGrade, finalTermGrade, birthDate));
+                    studentManagementSystem.add(new StudentDto(++studentCounter, name, surname, midtermGrade, finalTermGrade, birthDate,eStudentTypeMethod()));
                     break;
 
                 case 2:
@@ -221,6 +239,7 @@ public class StudentManagementSystem {
                             .midTerm(midtermUpdate)
                             .finalTerm(finalTermUpdate)
                             .birthDate(birthDateUpdate)
+                            .eStudentType(eStudentTypeMethod())
                             .build();
 
                     try {
