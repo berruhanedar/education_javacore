@@ -1,6 +1,7 @@
 package com.berruhanedar.dto;
 
 import com.berruhanedar._2_week._15_4_SpecialColor;
+import com.berruhanedar.enums.EStudentType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -24,12 +25,12 @@ public class StudentDto implements Serializable {
     private Integer id;
     private String name;
     private String surname;
+    private EStudentType eStudentType; // Enum
     private Double midTerm;
     private Double finalTerm;
     private Double resultTerm;
     private LocalDate birthDate;
     private Date createdDate; // System-generated date
-
 
     //static (Created only once throughout the object's lifetime)
     static {
@@ -41,15 +42,16 @@ public class StudentDto implements Serializable {
     }
 
     // Constructor with parameter
-    public StudentDto(Integer id, String name, String surname, Double midTerm, Double finalTerm, LocalDate birthDate) {
+    public StudentDto(Integer id, String name, String surname, Double midTerm, Double finalTerm, LocalDate birthDate, EStudentType eStudentType) {
         this.id = id;
         this.name = name;
         this.surname = surname;
         this.midTerm = midTerm;
         this.finalTerm = finalTerm;
         this.birthDate = birthDate;
-        this.createdDate=new Date(System.currentTimeMillis());
+        this.createdDate = new Date(System.currentTimeMillis());
         this.resultTerm = calculateResult();
+        this.eStudentType = eStudentType;
     }
 
     // Methods
@@ -93,7 +95,7 @@ public class StudentDto implements Serializable {
 
     public void setMidTerm(Double midTerm) {
         this.midTerm = midTerm;
-        this.resultTerm=calculateResult();
+        this.resultTerm = calculateResult();
     }
 
     public Double getFinalTerm() {
@@ -102,7 +104,7 @@ public class StudentDto implements Serializable {
 
     public void setFinalTerm(Double finalTerm) {
         this.finalTerm = finalTerm;
-        this.resultTerm=calculateResult();
+        this.resultTerm = calculateResult();
     }
 
     public LocalDate getBirthDate() {
@@ -119,5 +121,13 @@ public class StudentDto implements Serializable {
 
     public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
+    }
+
+    public EStudentType geteStudentType() {
+        return eStudentType;
+    }
+
+    public void seteStudentType(EStudentType eStudentType) {
+        this.eStudentType = eStudentType;
     }
 }
