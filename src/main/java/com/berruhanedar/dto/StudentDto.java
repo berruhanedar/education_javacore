@@ -1,4 +1,4 @@
-package com.berruhanedar.project_step1_file;
+package com.berruhanedar.dto;
 
 import com.berruhanedar._2_week._15_4_SpecialColor;
 import lombok.AllArgsConstructor;
@@ -48,6 +48,7 @@ public class StudentDto implements Serializable {
         this.midTerm = midTerm;
         this.finalTerm = finalTerm;
         this.birthDate = birthDate;
+        this.createdDate=new Date(System.currentTimeMillis());
         this.resultTerm = calculateResult();
     }
 
