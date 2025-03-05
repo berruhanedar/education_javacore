@@ -22,6 +22,7 @@ public class StudentManagementSystem {
 
     // Constructor without parameter
     public StudentManagementSystem() {
+        createFileIfNotExists();
         // Load the student list immediately when the program executes
         loadStudentsListFromFile();
     }
@@ -30,7 +31,22 @@ public class StudentManagementSystem {
     // Login
     // Register
     //////////////////////////////////////////////////
-    // File Create - IO
+    // FileIO
+
+    // File If Not Exists (students.txt)
+    private void createFileIfNotExists(){
+        File file = new File(FILE_NAME);
+        if(!file.exists()){
+            try{
+                file.createNewFile();
+                System.out.println("File "+FILE_NAME+ " created");
+            }catch(IOException ioException){
+                System.out.println("Error creating file");
+                ioException.printStackTrace();
+            }
+        }
+    }
+
     // File Create
     private void saveToFile() {
         try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(FILE_NAME))) {
