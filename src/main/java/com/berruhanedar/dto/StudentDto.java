@@ -1,6 +1,6 @@
 package com.berruhanedar.dto;
 
-import com.berruhanedar._2_week._15_4_SpecialColor;
+import com.berruhanedar.tutorials._2_week._15_4_SpecialColor;
 import com.berruhanedar.enums.EStudentType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

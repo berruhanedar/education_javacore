@@ -111,7 +111,6 @@ public class StudentManagementSystem {
                 .findAny() // Check if there is any matching student
                 .isPresent();
 
-        // Öğrenci yoksa
         // If No Student Found
         if (!found) {
             throw new StudentNotFoundException(name + " named student not found");
