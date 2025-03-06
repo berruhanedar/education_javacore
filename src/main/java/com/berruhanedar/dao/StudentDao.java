@@ -60,6 +60,7 @@ public class StudentDao implements IDaoGenerics<StudentDto> {
     // File Read
     // Upload Student List (File)
     private void loadStudentsListFromFile() {
+        studentDtoList.clear();
         try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(FILE_NAME))) {
             studentDtoList = (ArrayList<StudentDto>) objectInputStream.readObject();
             studentCounter = studentDtoList.size();
@@ -181,6 +182,163 @@ public class StudentDao implements IDaoGenerics<StudentDto> {
         return switchCaseStudent;
     }
 
+    public void chooiseStudentAdd() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Student's name:");
+        String name = scanner.nextLine();
+
+        System.out.println("Student's surname:");
+        String surname = scanner.nextLine();
+
+        System.out.println("Student's birthdate (YYYY-MM-DD):");
+        LocalDate birthDate = LocalDate.parse(scanner.nextLine());
+
+        System.out.println("Student's midterm grade:");
+        double midtermGrade = scanner.nextDouble();
+
+        System.out.println("Student's finalterm grade:");
+        double finalTermGrade = scanner.nextDouble();
+
+        EStudentType studentType = eStudentTypeMethod();
+        StudentDto newStudent = new StudentDto(++studentCounter, name, surname, midtermGrade, finalTermGrade, birthDate, studentType);
+        create(newStudent);
+        System.out.println("Added student");
+    }
+
+    public void chooiseStudentList() {
+        try {
+            list().forEach(System.out::println);
+            list();
+        } catch (StudentNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void chooiseStudentSearch() {
+        Scanner scanner = new Scanner(System.in);
+        list();
+        System.out.print("Enter the student name to search: ");
+        String searchName = scanner.nextLine();
+        try {
+            System.out.println(findByName(searchName));
+        } catch (StudentNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void chooiseStudenUpdate() {
+        Scanner scanner = new Scanner(System.in);
+        list();
+        System.out.println("Enter the ID of the student to be updated:");
+        int id = scanner.nextInt();
+        scanner.nextLine(); // We need this if a String follows an int
+
+        System.out.println("Enter the new student name:");
+        String nameUpdate = scanner.nextLine();
+
+        System.out.println("Enter the new student surname:");
+        String surnameUpdate = scanner.nextLine();
+
+        System.out.println("Student's birthdate (YYYY-MM-DD):");
+        LocalDate birthDateUpdate = LocalDate.parse(scanner.nextLine());
+
+        System.out.println("Student's midterm grade:");
+        double midtermUpdate = scanner.nextDouble();
+
+        System.out.println("Student's final term grade:");
+        double finalTermUpdate = scanner.nextDouble();
+
+        StudentDto studentDtoUpdate = StudentDto.builder()
+                .name(nameUpdate)
+                .surname(surnameUpdate)
+                .midTerm(midtermUpdate)
+                .finalTerm(finalTermUpdate)
+                .birthDate(birthDateUpdate)
+                .eStudentType(eStudentTypeMethod())
+                .build();
+
+        try {
+            update(id, studentDtoUpdate);
+        } catch (StudentNotFoundException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public void chooiseStudenDelete() {
+        Scanner scanner = new Scanner(System.in);
+        list();
+        System.out.print("Enter student ID to delete: ");
+        int deleteID = scanner.nextInt();
+        try {
+            delete(deleteID);
+            System.out.println("Student successfully deleted.");
+        } catch (StudentNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    /// Student Sum Counter
+    public void chooiseSumCounter() {
+        System.out.println("Total Number of Students: " + studentDtoList.size());
+    }
+
+    // Random Student
+    public void chooiseRandomStudent() {
+        if (!studentDtoList.isEmpty()) {
+            StudentDto randomStudent = studentDtoList.get((int) (Math.random() * studentDtoList.size()));
+            System.out.println("Randomly Selected Student: " + randomStudent);
+        } else {
+            System.out.println("No students in the system.");
+        }
+    }
+
+    // Calculate Student's Grade Average
+    public void chooiseStudentNoteAverage() {
+        if (!studentDtoList.isEmpty()) {
+            double avg = studentDtoList.stream()
+                    .mapToDouble(StudentDto::getResultTerm)
+                    .average()
+                    .orElse(0.0);
+            System.out.println("Student's Grade Average: " + avg);
+        } else {
+            System.out.println("No students in the system.");
+        }
+    }
+
+    // List Students with Highest and Lowest Grade
+    public void chooiseStudentNoteMinAndMax() {
+        if (!studentDtoList.isEmpty()) {
+            StudentDto maxStudent = studentDtoList.stream()
+                    .max((s1, s2) -> Double.compare(s1.getResultTerm(), s2.getResultTerm()))
+                    .orElse(null);
+
+            StudentDto minStudent = studentDtoList.stream()
+                    .min((s1, s2) -> Double.compare(s1.getResultTerm(), s2.getResultTerm()))
+                    .orElse(null);
+
+            System.out.println("Student with the Highest Grade: " + maxStudent);
+            System.out.println("Student with the Lowest Grade: " + minStudent);
+        } else {
+            System.out.println("Student list is empty.");
+        }
+    }
+
+    // Sort Students by Birth Date
+    public void chooiseStudentBirthdaySortedDate() {
+        studentDtoList.stream()
+                .sorted((s1, s2) -> s1.getBirthDate().compareTo(s2.getBirthDate()))
+                .forEach(System.out::println);
+    }
+
+    public void chooiseExit() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Exiting the system...");
+        scanner.close();
+        return;
+    }
+
+
     ///////////////////////////////////////////////
     // Console Chose (Add Student)
     @Override
@@ -206,94 +364,30 @@ public class StudentDao implements IDaoGenerics<StudentDto> {
             int chooise = scanner.nextInt();
             scanner.nextLine(); //Stop
 
-
             switch (chooise) {
-                case 1:
-                    System.out.println("Student's name:");
-                    String name = scanner.nextLine();
+                case 1 -> chooiseStudentAdd();
 
-                    System.out.println("Student's surname:");
-                    String surname = scanner.nextLine();
+                case 2 -> chooiseStudentList();
 
-                    System.out.println("Student's birthdate (YYYY-MM-DD):");
-                    LocalDate birthDate = LocalDate.parse(scanner.nextLine());
+                case 3 -> chooiseStudentSearch();
 
-                    System.out.println("Student's midterm grade:");
-                    double midtermGrade = scanner.nextDouble();
+                case 4 -> chooiseStudenUpdate();
 
-                    System.out.println("Student's finalterm grade:");
-                    double finalTermGrade = scanner.nextDouble();
+                case 5 -> chooiseStudenDelete();
 
-                    studentDao.create(new StudentDto(++studentCounter, name, surname, midtermGrade, finalTermGrade, birthDate, eStudentTypeMethod()));
-                    break;
+                case 6 -> chooiseSumCounter();
 
-                case 2:
-                    studentDao.list();
-                    break;
+                case 7 -> chooiseRandomStudent();
 
-                case 3:
-                    System.out.println("Enter the name of the student to search ");
-                    String searchName = scanner.nextLine();
-                    studentDao.findByName(searchName);
-                    break;
+                case 8 -> chooiseStudentNoteAverage();
 
-                case 4:
-                    studentDao.list();
-                    System.out.println("Enter the ID of the student to be updated:");
-                    int id = scanner.nextInt();
-                    scanner.nextLine(); // We need this if a String follows an int
+                case 9 -> chooiseStudentNoteMinAndMax();
 
-                    System.out.println("Enter the new student name:");
-                    String nameUpdate = scanner.nextLine();
+                case 10 -> chooiseStudentBirthdaySortedDate();
 
-                    System.out.println("Enter the new student surname:");
-                    String surnameUpdate = scanner.nextLine();
+                case 11 -> chooiseExit();
 
-                    System.out.println("Student's birthdate (YYYY-MM-DD):");
-                    LocalDate birthDateUpdate = LocalDate.parse(scanner.nextLine());
-
-                    System.out.println("Student's midterm grade:");
-                    double midtermUpdate = scanner.nextDouble();
-
-                    System.out.println("Student's final term grade:");
-                    double finalTermUpdate = scanner.nextDouble();
-
-                    StudentDto studentDtoUpdate = StudentDto.builder()
-                            .name(nameUpdate)
-                            .surname(surnameUpdate)
-                            .midTerm(midtermUpdate)
-                            .finalTerm(finalTermUpdate)
-                            .birthDate(birthDateUpdate)
-                            .eStudentType(eStudentTypeMethod())
-                            .build();
-
-                    try {
-                        studentDao.update(id, studentDtoUpdate);
-                    } catch (StudentNotFoundException e) {
-                        System.out.println(e.getMessage());
-                        e.printStackTrace();
-                    }
-                    break;
-
-                case 5:
-                    studentDao.list();
-                    System.out.println("Enter the ID of the student to be deleted:");
-                    int idDeleted = scanner.nextInt();
-                    studentDao.delete(idDeleted);
-                    break;
-
-                case 6:
-                    studentDao.list();
-                    break;
-
-                case 10:
-                    System.out.println("Exiting the system");
-                    System.exit(0);
-                    break;
-
-                default:
-                    System.out.println("You entered the wrong choice");
-                    break;
+                default -> System.out.println("You entered the wrong choice");
             }
         }
     }
