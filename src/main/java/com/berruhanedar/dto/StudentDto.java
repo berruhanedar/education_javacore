@@ -106,6 +106,9 @@ public class StudentDto implements Serializable {
         this.finalTerm = finalTerm;
         this.resultTerm = calculateResult();
     }
+    public Double getResultTerm() {
+        return resultTerm;
+    }
 
     public LocalDate getBirthDate() {
         return birthDate;
