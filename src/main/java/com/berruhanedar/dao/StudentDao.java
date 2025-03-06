@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class StudentDao {
+public class StudentDao implements IDaoGenerics<StudentDto> {
 
     // Field
     private ArrayList<StudentDto> studentDtoList = new ArrayList<>();
@@ -34,13 +34,13 @@ public class StudentDao {
     // FileIO
 
     // File If Not Exists (students.txt)
-    private void createFileIfNotExists(){
+    private void createFileIfNotExists() {
         File file = new File(FILE_NAME);
-        if(!file.exists()){
-            try{
+        if (!file.exists()) {
+            try {
                 file.createNewFile();
-                System.out.println("File "+FILE_NAME+ " created");
-            }catch(IOException ioException){
+                System.out.println("File " + FILE_NAME + " created");
+            } catch (IOException ioException) {
                 System.out.println("Error creating file");
                 ioException.printStackTrace();
             }
@@ -78,28 +78,32 @@ public class StudentDao {
     /////////////////////////////////////////////////////////////////
     // CRUD OPERATIONS
     // Add Students
-    public void add(StudentDto dto) {
-        studentDtoList.add(new StudentDto(++studentCounter, dto.getName(), dto.getSurname(), dto.getMidTerm(),
-                dto.getFinalTerm(), dto.getBirthDate(),dto.geteStudentType())
+    @Override
+    public StudentDto create(StudentDto studentDto) {
+        studentDtoList.add(new StudentDto(++studentCounter, studentDto.getName(), studentDto.getSurname(), studentDto.getMidTerm(),
+                studentDto.getFinalTerm(), studentDto.getBirthDate(), studentDto.geteStudentType())
         );
         System.out.println("Added student");
         // Add to File
         saveToFile();
+        return studentDto;
     }
 
-    // Student List
-    public void list() {
+    @Override
+    public ArrayList<StudentDto> list() {
         if (studentDtoList.isEmpty()) {
             System.out.println("No Students Available");
-            return;
+            throw new StudentNotFoundException("No Students Available");
         } else {
             System.out.println("Student List:");
             studentDtoList.forEach(System.out::println);
         }
+        return studentDtoList;
     }
 
     // Search Student
-    public void search(String name) {
+    @Override
+    public StudentDto findByName(String name) {
         /*studentDtoList.stream()
             .filter(temp -> temp.getName().equalsIgnoreCase(name))
             .forEach(System.out::println);*/
@@ -115,28 +119,32 @@ public class StudentDao {
         if (!found) {
             throw new StudentNotFoundException(name + " named student not found");
         }
+        return null;
     }
 
+
     // Update Student
-    public void update(int id, StudentDto dto) {
+    @Override
+    public StudentDto update(int id, StudentDto studentDto) {
         for (StudentDto temp : studentDtoList) {
             if (temp.getId() == id) {
-                temp.setName(dto.getName());
-                temp.setSurname(dto.getSurname());
-                temp.setBirthDate(dto.getBirthDate());
-                temp.setMidTerm(dto.getMidTerm());
-                temp.setFinalTerm(dto.getFinalTerm());
-                temp.seteStudentType(dto.geteStudentType());
+                temp.setName(studentDto.getName());
+                temp.setSurname(studentDto.getSurname());
+                temp.setBirthDate(studentDto.getBirthDate());
+                temp.setMidTerm(studentDto.getMidTerm());
+                temp.setFinalTerm(studentDto.getFinalTerm());
+                temp.seteStudentType(studentDto.geteStudentType());
                 System.out.println("Student information updated");
                 saveToFile();
-                return;
             }
         }
         System.out.println("Student not found");
+        return studentDto;
     }
 
     // Delete Student
-    public void delete(int id) {
+    @Override
+    public StudentDto delete(int id) {
         /*studentDtoList.removeIf(temp -> temp.getId() == id);
         System.out.println("Student deleted");*/
 
@@ -147,6 +155,7 @@ public class StudentDao {
         } else {
             throw new StudentNotFoundException("Student not found");
         }
+        return null;
     }
 
     //////////////////////////////////////////////////
@@ -174,6 +183,7 @@ public class StudentDao {
 
     ///////////////////////////////////////////////
     // Console Chose (Add Student)
+    @Override
     public void chooise() {
         Scanner scanner = new Scanner(System.in);
         StudentDao studentDao = new StudentDao();
@@ -214,7 +224,7 @@ public class StudentDao {
                     System.out.println("Student's finalterm grade:");
                     double finalTermGrade = scanner.nextDouble();
 
-                    studentDao.add(new StudentDto(++studentCounter, name, surname, midtermGrade, finalTermGrade, birthDate,eStudentTypeMethod()));
+                    studentDao.create(new StudentDto(++studentCounter, name, surname, midtermGrade, finalTermGrade, birthDate, eStudentTypeMethod()));
                     break;
 
                 case 2:
@@ -224,7 +234,7 @@ public class StudentDao {
                 case 3:
                     System.out.println("Enter the name of the student to search ");
                     String searchName = scanner.nextLine();
-                    studentDao.search(searchName);
+                    studentDao.findByName(searchName);
                     break;
 
                 case 4:
