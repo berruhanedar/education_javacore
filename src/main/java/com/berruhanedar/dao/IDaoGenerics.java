@@ -2,29 +2,31 @@ package com.berruhanedar.dao;
 
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.List;
 
 public interface IDaoGenerics<T> {
     // CRUD
-
     // CREATE
-    public T create(T t);
-
-    // FIND BY NAME
-    public T findByName(String name);
+    T create(T t);
 
     // LIST
-    public ArrayList<T> list();
+    List<T> list();
+
+    // FIND BY NAME,ID
+    T findByName(String name);
+
+    T findById(int id);
 
     // UPDATE
-    public T update(int id, T t);
+    T update(int id, T t);
 
     // DELETE
-    public T delete(int id);
+    T delete(int id);
 
     // CHOOISE
-    public void chooise();
+    void chooise();
 
-    // BODY Method
+    // DATABASE CONNECTION
     default Connection getInterfaceConnection() {
         return null;
     }
