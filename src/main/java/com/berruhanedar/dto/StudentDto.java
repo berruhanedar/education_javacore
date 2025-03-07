@@ -16,46 +16,62 @@ import java.util.Date;
 @ToString
 @EqualsAndHashCode
 
-//Student
-public class StudentDto implements Serializable {
-    //Serializable
+// Student
+public class StudentDto extends PersonDto implements Serializable {
+    // Serializable
     public static final Long serialVersionUID = 1L;
 
-    // Field
-    private Integer id;
-    private String name;
-    private String surname;
-    private EStudentType eStudentType; // Enum
-    private Double midTerm;
-    private Double finalTerm;
-    private Double resultTerm;
-    private LocalDate birthDate;
-    private Date createdDate; // System-generated date
+    // Fields
+    private EStudentType eStudentType; // Enum Student Type
+    private Double midTerm;      // Midterm grade
+    private Double finalTerm;    // Final grade
+    private Double resultTerm;   // Result grade: (Midterm 40% + Final 60%)
+    private String status;       // Passed or Failed?
 
-    //static (Created only once throughout the object's lifetime)
+    // static (Created only once throughout the object's lifetime)
     static {
         System.out.println(_15_4_SpecialColor.BLUE + "loaded static StudentDto" + _15_4_SpecialColor.RESET);
     }
 
-    // Constructor without parameter
+    // Constructor with parameters
     public StudentDto() {
+        super();
+        this.midTerm = 0.0;
+        this.finalTerm = 0.0;
+        this.resultTerm = 0.0;
+        this.resultTerm = 0.0; // default value
     }
 
-    // Constructor with parameter
-    public StudentDto(Integer id, String name, String surname, Double midTerm, Double finalTerm, LocalDate birthDate, EStudentType eStudentType) {
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
+    // toString
+    @Override
+    public String toString() {
+        return super.toString() + "StudentDto{" +
+                "eStudentType=" + eStudentType +
+                ", midTerm=" + midTerm +
+                ", finalTerm=" + finalTerm +
+                ", resultTerm=" + resultTerm +
+                ", status='" + status + '\'' +
+                "} ";
+    }
+
+    @Override
+    public void displayInfo() {
+        System.out.println("Student " + name + " " + surname + " " + birthDate);
+    }
+
+    public StudentDto(Integer id, String name, String surname, LocalDate birthDate, Double midTerm, Double finalTerm, EStudentType eStudentType) {
+        // Calling the constructor from the parent class (StudentDto)
+        super(id, name, surname, birthDate);
+        // this: Local
         this.midTerm = midTerm;
         this.finalTerm = finalTerm;
-        this.birthDate = birthDate;
-        this.createdDate = new Date(System.currentTimeMillis());
         this.resultTerm = calculateResult();
+        this.status = determineStatus();
         this.eStudentType = eStudentType;
     }
 
     // Methods
-    // Midterm and final calculate
+    // Midterm and final calculation
     private Double calculateResult() {
         if (midTerm == null || finalTerm == null) {
             return 0.0;
@@ -64,7 +80,13 @@ public class StudentDto implements Serializable {
         }
     }
 
-    // Getter ad Setter
+    // **📌 Status: Passed / Failed**
+    private String determineStatus() {
+        if (this.resultTerm == null) return "Unknown"; // **Null check added**
+        return (this.resultTerm >= 50.0) ? "Passed" : "Failed";
+    }
+
+    // Getters and Setters
     public Integer getId() {
         return id;
     }
@@ -108,6 +130,18 @@ public class StudentDto implements Serializable {
     }
     public Double getResultTerm() {
         return resultTerm;
+    }
+
+    public void setResultTerm(Double resultTerm) {
+        this.resultTerm = resultTerm;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public LocalDate getBirthDate() {
