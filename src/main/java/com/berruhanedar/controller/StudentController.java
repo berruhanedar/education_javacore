@@ -29,6 +29,11 @@ public class StudentController implements IDaoGenerics<StudentDto> {
     }
 
     @Override
+    public StudentDto findById(int id) {
+        return null;
+    }
+
+    @Override
     public ArrayList<StudentDto> list() {
         return studentDao.list();
     }
