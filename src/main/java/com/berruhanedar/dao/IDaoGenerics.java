@@ -1,7 +1,6 @@
 package com.berruhanedar.dao;
 
 import java.sql.Connection;
-import java.util.ArrayList;
 import java.util.List;
 
 public interface IDaoGenerics<T> {
@@ -24,7 +23,7 @@ public interface IDaoGenerics<T> {
     T delete(int id);
 
     // CHOOISE
-    void chooise();
+    void choose();
 
     // DATABASE CONNECTION
     default Connection getInterfaceConnection() {
