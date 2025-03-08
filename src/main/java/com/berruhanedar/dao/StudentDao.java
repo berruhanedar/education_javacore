@@ -343,7 +343,7 @@ public class StudentDao implements IDaoGenerics<StudentDto> {
     /// ///////////////////////////////////////////////////////////////////////
 // Console Selection (Student)
     @Override
-    public void chooise() {
+    public void choose() {
         while (true) {
             try {
                 System.out.println("\n" + _15_4_SpecialColor.BLUE + "===== STUDENT MANAGEMENT SYSTEM =====" + _15_4_SpecialColor.RESET);
