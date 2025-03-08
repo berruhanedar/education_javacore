@@ -1,9 +1,13 @@
 package com.berruhanedar.dto;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 /**
- * @param personDto
+ * @param id
+ * @param name
+ * @param surname
+ * @param birthDate
  * @param subject
  * @param yearsOfExperience
  * @param isTenured
@@ -18,18 +22,24 @@ Warning!
 2- Constructor public Deneme { }
 */
 
-
 public record TeacherDto(
-        PersonDto personDto, // Composition
+        Integer id,
+        String name,
+        String surname,
+        LocalDate birthDate,
         String subject,
         int yearsOfExperience,
         boolean isTenured,
         double salary
+
 ) implements Serializable {
 
     // Data Validation with Default Constructors
     public TeacherDto {
-        if (personDto == null) throw new IllegalArgumentException("Person information cannot be null inside Teacher.");
+        if (id == null || id < 0) throw new IllegalArgumentException("ID cannot be negative");
+        if (name == null || name.isBlank()) throw new IllegalArgumentException("Name cannot be blank");
+        if (surname == null || surname.isBlank()) throw new IllegalArgumentException("Surname cannot be blank");
+        if (birthDate == null) throw new IllegalArgumentException("Birth date cannot be null");
         if (subject == null || subject.isBlank() || subject.isEmpty())
             throw new IllegalArgumentException("Subject cannot be null inside Teacher.");
         if (yearsOfExperience < 0) throw new IllegalArgumentException("Years of experience cannot be negative");
@@ -37,12 +47,10 @@ public record TeacherDto(
     }
 
     public String fullName() {
-        return personDto.id + " " + personDto.name + " " + personDto.surname;
+        return name + " " + surname;
     }
 
     public String experienceLevel() {
         return (yearsOfExperience > 10) ? "Senior Teacher" : "New Teacher";
     }
-
-
 }
