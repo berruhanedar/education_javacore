@@ -22,56 +22,62 @@ public class TeacherDao implements IDaoGenerics<TeacherDto> {
     private final Scanner scanner = new Scanner(System.in);
     private static final Random random = new Random();
     private static final String FILE_NAME = "teacher.txt";
+    private final FileHandler fileHandler= new FileHandler();
 
     public TeacherDao() {
         // Default
         teacherDtoList = new ArrayList<>();
-        createFileIfNotExists();
-        loadTeachersFromFile();
+        fileHandler.createFileIfNotExists();
+        fileHandler.loadTeachersFromFile();
     }
 
-    private void createFileIfNotExists() {
-        File file = new File(FILE_NAME);
-        if (!file.exists()) {
-            try {
-                if (file.createNewFile()) {
-                    System.out.println(_15_4_SpecialColor.YELLOW + FILE_NAME + " has been created." + _15_4_SpecialColor.RESET);
+    //Inner Class
+    public class FileHandler{
+        private void createFileIfNotExists() {
+            File file = new File(FILE_NAME);
+            if (!file.exists()) {
+                try {
+                    if (file.createNewFile()) {
+                        System.out.println(_15_4_SpecialColor.YELLOW + FILE_NAME + " has been created." + _15_4_SpecialColor.RESET);
+                    }
+                } catch (IOException e) {
+                    System.out.println(_15_4_SpecialColor.RED + "An error occurred while creating the file!" + _15_4_SpecialColor.RESET);
+                    e.printStackTrace();
+                }
+            }
+        }
+
+
+        private void saveToFile() {
+            try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(FILE_NAME))) {
+                for (TeacherDto teacher : teacherDtoList) {
+                    bufferedWriter.write(teacherToCsv(teacher) + "\n");
+                }
+                System.out.println("Teachers have been saved to the file.");
+            } catch (IOException e) {
+                System.out.println("File saving error!");
+                e.printStackTrace();
+            }
+        }
+
+        private void loadTeachersFromFile() {
+            teacherDtoList.clear();
+            try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    TeacherDto teacher = csvToTeacher(line);
+                    if (teacher != null) {
+                        teacherDtoList.add(teacher);
+                    }
                 }
             } catch (IOException e) {
-                System.out.println(_15_4_SpecialColor.RED + "An error occurred while creating the file!" + _15_4_SpecialColor.RESET);
+                System.out.println("File reading error!");
                 e.printStackTrace();
             }
         }
     }
 
 
-    private void saveToFile() {
-        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(FILE_NAME))) {
-            for (TeacherDto teacher : teacherDtoList) {
-                bufferedWriter.write(teacherToCsv(teacher) + "\n");
-            }
-            System.out.println("Teachers have been saved to the file.");
-        } catch (IOException e) {
-            System.out.println("File saving error!");
-            e.printStackTrace();
-        }
-    }
-
-    private void loadTeachersFromFile() {
-        teacherDtoList.clear();
-        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                TeacherDto teacher = csvToTeacher(line);
-                if (teacher != null) {
-                    teacherDtoList.add(teacher);
-                }
-            }
-        } catch (IOException e) {
-            System.out.println("File reading error!");
-            e.printStackTrace();
-        }
-    }
 
     private String teacherToCsv(TeacherDto teacher) {
         return
@@ -123,7 +129,7 @@ public class TeacherDao implements IDaoGenerics<TeacherDto> {
     @Override
     public TeacherDto create(TeacherDto teacher) {
         teacherDtoList.add(teacher);
-        saveToFile();
+        fileHandler.saveToFile();
         return teacher;
     }
 
@@ -152,7 +158,7 @@ public class TeacherDao implements IDaoGenerics<TeacherDto> {
         for (int i = 0; i < teacherDtoList.size(); i++) {
             if (teacherDtoList.get(i).id() == id) {
                 teacherDtoList.set(i, updatedTeacher);
-                saveToFile();
+                fileHandler.saveToFile();
                 return updatedTeacher;
             }
         }
@@ -165,7 +171,7 @@ public class TeacherDao implements IDaoGenerics<TeacherDto> {
                 .filter(t -> t.id() == id)
                 .findFirst();
         teacher.ifPresent(teacherDtoList::remove);
-        saveToFile();
+        fileHandler.saveToFile();
         return teacher.orElseThrow(() -> new TeacherNotFoundException(id + " not found"));
     }
 
@@ -251,7 +257,7 @@ public class TeacherDao implements IDaoGenerics<TeacherDto> {
 
         TeacherDto teacher = new TeacherDto(id, name, surname, birthDate, subject, yearsOfExperience, isTenured, salary);
         teacherDtoList.add(teacher);
-        saveToFile();
+        fileHandler.saveToFile();
         System.out.println("Teacher successfully added.");
     }
 
