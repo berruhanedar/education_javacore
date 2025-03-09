@@ -2,11 +2,10 @@ package com.berruhanedar;
 
 
 import com.berruhanedar.controller.StudentController;
-import com.berruhanedar.dao.TeacherDao;
+import com.berruhanedar.controller.TeacherController;
 
 import java.util.Scanner;
 
-//
 public class MainTest {
     // Scanner
     private static final Scanner scanner = new Scanner(System.in);
@@ -53,8 +52,8 @@ public class MainTest {
     // TEACHER
     private static void teacher() {
         try {
-            TeacherDao teacherDao = new TeacherDao();
-            teacherDao.choose();
+            TeacherController teacherController = new TeacherController();
+            teacherController.choose();
         } catch (Exception e) {
             e.printStackTrace();
         }
