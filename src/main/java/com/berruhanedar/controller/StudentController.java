@@ -49,7 +49,7 @@ public class StudentController implements IDaoGenerics<StudentDto> {
     }
 
     @Override
-    public void chooise(){
-        studentDao.chooise();
+    public void choose(){
+        studentDao.choose();
     }
 }
