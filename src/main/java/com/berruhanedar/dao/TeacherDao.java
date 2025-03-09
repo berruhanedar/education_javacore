@@ -18,12 +18,14 @@ import java.util.*;
 public class TeacherDao implements IDaoGenerics<TeacherDto> {
 
     // Field
-    private ArrayList<TeacherDto> teacherDtoList = new ArrayList<>();
+    private ArrayList<TeacherDto> teacherDtoList;
     private final Scanner scanner = new Scanner(System.in);
     private static final Random random = new Random();
     private static final String FILE_NAME = "teacher.txt";
 
     public TeacherDao() {
+        // Default
+        teacherDtoList = new ArrayList<>();
         createFileIfNotExists();
         loadTeachersFromFile();
     }
@@ -106,7 +108,8 @@ public class TeacherDao implements IDaoGenerics<TeacherDto> {
                     parts[1],
                     parts[2],
                     birthDate,
-                    parts[4],
+                    // parts[4],
+                    ETeacherSubject.valueOf(parts[4]),
                     Integer.parseInt(parts[5]),
                     Boolean.parseBoolean(parts[6]),
                     Double.parseDouble(parts[7])
@@ -166,6 +169,20 @@ public class TeacherDao implements IDaoGenerics<TeacherDto> {
         return teacher.orElseThrow(() -> new TeacherNotFoundException(id + " not found"));
     }
 
+    public ETeacherSubject teacherTypeMethod() {
+        System.out.println("\n" + _15_4_SpecialColor.GREEN + "Öğretmen türünü seçiniz.\n1-)History\n2-)Biology\n3-)Chemistry\n4-)Computer Science\n5-)Other" + _15_4_SpecialColor.RESET);
+        int typeChooise = scanner.nextInt();
+        ETeacherSubject swichcaseTeacher = switch (typeChooise) {
+            case 1 -> ETeacherSubject.HISTORY;
+            case 2 -> ETeacherSubject.BIOLOGY;
+            case 3 -> ETeacherSubject.CHEMISTRY;
+            case 4 -> ETeacherSubject.COMPUTER_SCIENCE;
+            case 5 -> ETeacherSubject.MATHEMATICS;
+            default -> ETeacherSubject.OTHER;
+        };
+        return swichcaseTeacher;
+    }
+
     @Override
     public void choose() {
         while (true) {
@@ -220,8 +237,8 @@ public class TeacherDao implements IDaoGenerics<TeacherDto> {
         System.out.print("Birth Date (yyyy-MM-dd): ");
         LocalDate birthDate = LocalDate.parse(scanner.nextLine(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
-        System.out.print("Subject Area: ");
-        String subject = scanner.nextLine();
+        System.out.print("Subject Area (HISTORY, BIOLOGY, CHEMISTRY, COMPUTER_SCIENCE, MATHEMATICS, OTHER): ");
+        ETeacherSubject subject = teacherTypeMethod();
 
         System.out.print("Years of Experience: ");
         int yearsOfExperience = scanner.nextInt();
