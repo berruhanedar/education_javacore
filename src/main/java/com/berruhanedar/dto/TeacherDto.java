@@ -1,7 +1,21 @@
 package com.berruhanedar.dto;
 
+import com.berruhanedar.dao.ETeacherSubject;
+
 import java.io.Serializable;
 import java.time.LocalDate;
+
+/*
+//Inner Class
+//Enum ()
+public enum ETeacherSubject {
+    MATHEMATICS,
+    CHEMISTRY,
+    BIOLOGY,
+    HISTORY,
+    COMPUTER_SCIENCE
+}
+*/
 
 /**
  * @param id
@@ -27,7 +41,8 @@ public record TeacherDto(
         String name,
         String surname,
         LocalDate birthDate,
-        String subject,
+        // String subject,
+        ETeacherSubject subject,
         int yearsOfExperience,
         boolean isTenured,
         double salary
@@ -40,7 +55,7 @@ public record TeacherDto(
         if (name == null || name.isBlank()) throw new IllegalArgumentException("Name cannot be blank");
         if (surname == null || surname.isBlank()) throw new IllegalArgumentException("Surname cannot be blank");
         if (birthDate == null) throw new IllegalArgumentException("Birth date cannot be null");
-        if (subject == null || subject.isBlank() || subject.isEmpty())
+        if (subject == null )
             throw new IllegalArgumentException("Subject cannot be null inside Teacher.");
         if (yearsOfExperience < 0) throw new IllegalArgumentException("Years of experience cannot be negative");
         if (salary < 0) throw new IllegalArgumentException("Salary cannot be negative");
