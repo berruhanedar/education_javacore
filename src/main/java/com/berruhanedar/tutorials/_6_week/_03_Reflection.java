@@ -4,7 +4,6 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
-// Class: Student
 class Student {
 
     // Fields: name, age
@@ -24,7 +23,7 @@ class Student {
     public void study() {
         System.out.println(name + " is studying...");
     }
-} // end Class
+}
 
 /////////////////////////////////////////
 /// Reflection
